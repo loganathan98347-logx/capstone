@@ -1,0 +1,5 @@
+Frontend: React.js
+Backend: Spring Boot (Java 17)
+Database: MySQL
+Authentication: Spring Security + JWT
+API Documentation: Swagger
