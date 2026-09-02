@@ -1,6 +1,0 @@
-com\campusconnect\backend\controller\StudentController.class
-com\campusconnect\backend\service\StudentService.class
-com\campusconnect\backend\entity\Student.class
-com\campusconnect\backend\BackendApplication.class
-com\campusconnect\backend\config\SecurityConfig.class
-com\campusconnect\backend\repository\StudentRepository.class
