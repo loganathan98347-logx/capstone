@@ -1,0 +1,8 @@
+Users
+Students
+Companies
+Job_Postings
+Applications
+Interviews
+Notifications
+Resumes
