@@ -1,0 +1,1307 @@
+/* =========================================================
+   CAMPUSCONNECT - JOBS PAGE
+   BLACK + WHITE + RED
+   GLASSMORPHISM UI
+========================================================= */
+
+* {
+  box-sizing: border-box;
+}
+
+.jobs-page {
+  width: 100%;
+  min-height: 100vh;
+
+  background: #000000;
+  color: #ffffff;
+
+  font-family:
+    Arial,
+    Helvetica,
+    sans-serif;
+
+  overflow-x: hidden;
+}
+
+
+/* =========================================================
+   HERO
+========================================================= */
+
+.jobs-hero {
+  width: 100%;
+  min-height: 390px;
+
+  background:
+    radial-gradient(
+      circle at 85% 15%,
+      rgba(229, 9, 20, 0.16),
+      transparent 30%
+    ),
+    #000000;
+
+  padding: 75px 8% 100px;
+
+  position: relative;
+
+  overflow: hidden;
+}
+
+
+/* red glow */
+
+.jobs-hero::before {
+  content: "";
+
+  position: absolute;
+
+  width: 500px;
+  height: 500px;
+
+  right: -260px;
+  top: -280px;
+
+  background: #e50914;
+
+  border-radius: 50%;
+
+  filter: blur(170px);
+
+  opacity: 0.12;
+
+  pointer-events: none;
+}
+
+
+/* white glow */
+
+.jobs-hero::after {
+  content: "";
+
+  position: absolute;
+
+  width: 350px;
+  height: 350px;
+
+  left: -250px;
+  bottom: -250px;
+
+  background: #ffffff;
+
+  border-radius: 50%;
+
+  filter: blur(180px);
+
+  opacity: 0.025;
+
+  pointer-events: none;
+}
+
+
+/* =========================================================
+   HERO CONTENT
+========================================================= */
+
+.jobs-hero-content {
+  width: 100%;
+  max-width: 1200px;
+
+  margin: auto;
+
+  position: relative;
+
+  z-index: 2;
+}
+
+
+/* =========================================================
+   HERO BADGE
+========================================================= */
+
+.jobs-hero-badge {
+  display: inline-flex;
+
+  align-items: center;
+
+  padding: 8px 14px;
+
+  border-radius: 30px;
+
+  background:
+    rgba(229, 9, 20, 0.08);
+
+  border:
+    1px solid
+    rgba(229, 9, 20, 0.25);
+
+  color: #ff3342;
+
+  font-size: 12px;
+
+  font-weight: 700;
+
+  margin-bottom: 20px;
+
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+}
+
+
+/* =========================================================
+   HERO TITLE
+========================================================= */
+
+.jobs-hero h1 {
+  max-width: 850px;
+
+  margin: 0;
+
+  color: #ffffff;
+
+  font-size: clamp(
+    48px,
+    6vw,
+    76px
+  );
+
+  line-height: 0.98;
+
+  font-weight: 700;
+
+  letter-spacing: -3px;
+}
+
+
+.jobs-hero h1 span {
+  color: #e50914;
+}
+
+
+/* =========================================================
+   HERO DESCRIPTION
+========================================================= */
+
+.jobs-hero p {
+  max-width: 650px;
+
+  margin-top: 25px;
+
+  color: #858585;
+
+  font-size: 16px;
+
+  line-height: 1.7;
+}
+
+
+/* =========================================================
+   SEARCH CONTAINER
+========================================================= */
+
+.jobs-search-container {
+  width: 100%;
+
+  max-width: 1200px;
+
+  margin: 35px auto 0;
+
+  padding: 9px;
+
+  position: relative;
+
+  z-index: 10;
+
+  display: flex;
+
+  align-items: center;
+
+  gap: 5px;
+
+  background:
+    linear-gradient(
+      135deg,
+      rgba(255, 255, 255, 0.075),
+      rgba(255, 255, 255, 0.025)
+    );
+
+  border:
+    1px solid
+    rgba(255, 255, 255, 0.17);
+
+  border-radius: 16px;
+
+  backdrop-filter: blur(30px);
+
+  -webkit-backdrop-filter: blur(30px);
+
+  box-shadow:
+    0 25px 70px
+    rgba(0, 0, 0, 0.55),
+
+    inset
+      0 1px 0
+      rgba(255, 255, 255, 0.08);
+}
+
+
+/* =========================================================
+   SEARCH ITEM
+========================================================= */
+
+.jobs-search-item {
+  flex: 1;
+
+  height: 58px;
+
+  display: flex;
+
+  align-items: center;
+
+  gap: 12px;
+
+  padding: 0 18px;
+
+  background:
+    rgba(0, 0, 0, 0.35);
+
+  border:
+    1px solid
+    rgba(255, 255, 255, 0.08);
+
+  border-radius: 10px;
+
+  transition: 0.25s ease;
+}
+
+
+.jobs-search-item:focus-within {
+  border-color: #e50914;
+
+  background:
+    rgba(229, 9, 20, 0.045);
+
+  box-shadow:
+    0 0 0 2px
+    rgba(229, 9, 20, 0.08);
+}
+
+
+/* =========================================================
+   SEARCH ICON
+========================================================= */
+
+.search-icon {
+  color: #e50914;
+
+  font-size: 16px;
+
+  flex-shrink: 0;
+}
+
+
+/* =========================================================
+   SEARCH INPUT
+========================================================= */
+
+.jobs-search-item input {
+  width: 100%;
+
+  height: 100%;
+
+  border: none;
+
+  outline: none;
+
+  background: transparent;
+
+  color: #ffffff;
+
+  font-size: 14px;
+}
+
+
+.jobs-search-item input::placeholder {
+  color: #666666;
+}
+
+
+/* =========================================================
+   SEARCH DIVIDER
+========================================================= */
+
+.jobs-search-divider {
+  width: 1px;
+
+  height: 32px;
+
+  background:
+    rgba(255, 255, 255, 0.10);
+}
+
+
+/* =========================================================
+   SEARCH BUTTON
+========================================================= */
+
+.jobs-search-button {
+  height: 58px;
+
+  padding:
+    0 30px;
+
+  border: none;
+
+  border-radius: 10px;
+
+  background: #e50914;
+
+  color: #ffffff;
+
+  font-size: 14px;
+
+  font-weight: 700;
+
+  cursor: pointer;
+
+  transition:
+    0.25s ease;
+
+  white-space: nowrap;
+}
+
+
+.jobs-search-button:hover {
+  background: #ff1725;
+
+  transform: translateY(-2px);
+
+  box-shadow:
+    0 10px 30px
+    rgba(229, 9, 20, 0.30);
+}
+
+
+/* =========================================================
+   MAIN CONTENT
+========================================================= */
+
+.jobs-content {
+  width: 100%;
+
+  background: #000000;
+
+  padding:
+    55px 8% 90px;
+
+  position: relative;
+}
+
+
+/* =========================================================
+   JOB HEADER
+========================================================= */
+
+.jobs-header {
+  width: 100%;
+
+  max-width: 1200px;
+
+  margin: 0 auto 25px;
+
+  display: flex;
+
+  align-items: flex-end;
+
+  justify-content: space-between;
+
+  gap: 20px;
+}
+
+
+.jobs-header h2 {
+  margin: 0;
+
+  color: #ffffff;
+
+  font-size: 30px;
+
+  font-weight: 600;
+
+  letter-spacing: -1px;
+}
+
+
+.jobs-header p {
+  margin: 8px 0 0;
+
+  color: #666666;
+
+  font-size: 13px;
+}
+
+
+/* =========================================================
+   SORT
+========================================================= */
+
+.jobs-sort {
+  display: flex;
+
+  align-items: center;
+
+  gap: 10px;
+}
+
+
+.jobs-sort label {
+  color: #666666;
+
+  font-size: 12px;
+}
+
+
+.jobs-sort select {
+  height: 40px;
+
+  padding:
+    0 14px;
+
+  border:
+    1px solid
+    rgba(255, 255, 255, 0.14);
+
+  border-radius: 8px;
+
+  background:
+    rgba(255, 255, 255, 0.045);
+
+  color: #ffffff;
+
+  outline: none;
+
+  cursor: pointer;
+
+  font-size: 13px;
+
+  backdrop-filter: blur(12px);
+}
+
+
+.jobs-sort select:focus {
+  border-color: #e50914;
+}
+
+
+.jobs-sort select option {
+  background: #111111;
+
+  color: #ffffff;
+}
+
+
+/* =========================================================
+   FILTERS
+========================================================= */
+
+.jobs-filters {
+  width: 100%;
+
+  max-width: 1200px;
+
+  margin:
+    0 auto 28px;
+
+  display: flex;
+
+  align-items: center;
+
+  gap: 10px;
+}
+
+
+.jobs-filters select {
+  height: 42px;
+
+  padding:
+    0 14px;
+
+  border:
+    1px solid
+    rgba(255, 255, 255, 0.12);
+
+  border-radius: 8px;
+
+  background:
+    rgba(255, 255, 255, 0.04);
+
+  color: #ffffff;
+
+  outline: none;
+
+  cursor: pointer;
+
+  font-size: 13px;
+
+  backdrop-filter: blur(12px);
+}
+
+
+.jobs-filters select:focus {
+  border-color: #e50914;
+}
+
+
+.jobs-filters select option {
+  background: #111111;
+
+  color: #ffffff;
+}
+
+
+/* =========================================================
+   CLEAR FILTERS
+========================================================= */
+
+.clear-filters-button {
+  height: 42px;
+
+  padding:
+    0 17px;
+
+  border:
+    1px solid
+    rgba(229, 9, 20, 0.35);
+
+  border-radius: 8px;
+
+  background:
+    rgba(229, 9, 20, 0.07);
+
+  color: #ff3342;
+
+  font-size: 13px;
+
+  font-weight: 600;
+
+  cursor: pointer;
+
+  transition: 0.2s ease;
+}
+
+
+.clear-filters-button:hover {
+  background:
+    rgba(229, 9, 20, 0.15);
+
+  border-color: #e50914;
+}
+
+
+/* =========================================================
+   JOB LIST
+========================================================= */
+
+.jobs-list {
+  width: 100%;
+
+  max-width: 1200px;
+
+  margin: auto;
+
+  display: flex;
+
+  flex-direction: column;
+
+  gap: 17px;
+}
+
+
+/* =========================================================
+   JOB CARD
+========================================================= */
+
+.job-card {
+  width: 100%;
+
+  min-height: 185px;
+
+  padding: 25px;
+
+  display: grid;
+
+  grid-template-columns:
+    55px 1fr auto;
+
+  gap: 20px;
+
+  align-items: center;
+
+  position: relative;
+
+  overflow: hidden;
+
+  background:
+    linear-gradient(
+      135deg,
+      rgba(255, 255, 255, 0.065),
+      rgba(255, 255, 255, 0.022)
+    );
+
+  border:
+    1px solid
+    rgba(255, 255, 255, 0.13);
+
+  border-radius: 18px;
+
+  backdrop-filter: blur(25px);
+
+  -webkit-backdrop-filter: blur(25px);
+
+  box-shadow:
+    0 20px 50px
+    rgba(0, 0, 0, 0.40),
+
+    inset
+      0 1px 0
+      rgba(255, 255, 255, 0.06);
+
+  transition:
+    transform 0.25s ease,
+    border-color 0.25s ease,
+    box-shadow 0.25s ease;
+}
+
+
+/* glass reflection */
+
+.job-card::before {
+  content: "";
+
+  position: absolute;
+
+  width: 250px;
+
+  height: 500px;
+
+  top: -250px;
+
+  right: 100px;
+
+  background:
+    linear-gradient(
+      90deg,
+      transparent,
+      rgba(255, 255, 255, 0.025),
+      transparent
+    );
+
+  transform:
+    rotate(25deg);
+
+  pointer-events: none;
+}
+
+
+/* red glow */
+
+.job-card::after {
+  content: "";
+
+  position: absolute;
+
+  width: 180px;
+  height: 180px;
+
+  right: -100px;
+  bottom: -100px;
+
+  background: #e50914;
+
+  border-radius: 50%;
+
+  filter: blur(100px);
+
+  opacity: 0.07;
+
+  pointer-events: none;
+}
+
+
+.job-card:hover {
+  transform:
+    translateY(-4px);
+
+  border-color:
+    rgba(229, 9, 20, 0.55);
+
+  box-shadow:
+    0 25px 60px
+    rgba(0, 0, 0, 0.55),
+
+    0 0 30px
+    rgba(229, 9, 20, 0.06);
+}
+
+
+/* =========================================================
+   COMPANY LOGO
+========================================================= */
+
+.job-company-logo {
+  width: 55px;
+
+  height: 55px;
+
+  border-radius: 12px;
+
+  background: #e50914;
+
+  color: #ffffff;
+
+  display: flex;
+
+  align-items: center;
+
+  justify-content: center;
+
+  font-size: 21px;
+
+  font-weight: 800;
+
+  box-shadow:
+    0 8px 25px
+    rgba(229, 9, 20, 0.20);
+
+  position: relative;
+
+  z-index: 2;
+}
+
+
+/* =========================================================
+   JOB MAIN INFO
+========================================================= */
+
+.job-main-info {
+  min-width: 0;
+
+  position: relative;
+
+  z-index: 2;
+}
+
+
+/* =========================================================
+   CARD TOP
+========================================================= */
+
+.job-card-top {
+  display: flex;
+
+  justify-content: space-between;
+
+  align-items: flex-start;
+
+  gap: 15px;
+}
+
+
+.job-card-top h3 {
+  margin: 0;
+
+  color: #ffffff;
+
+  font-size: 19px;
+
+  font-weight: 700;
+
+  line-height: 1.3;
+}
+
+
+.job-company {
+  margin:
+    7px 0 0;
+
+  color: #aaa;
+
+  font-size: 13px;
+
+  font-weight: 600;
+}
+
+
+.job-posted {
+  color: #666;
+
+  font-size: 11px;
+
+  white-space: nowrap;
+}
+
+
+/* =========================================================
+   JOB META
+========================================================= */
+
+.job-meta {
+  display: flex;
+
+  flex-wrap: wrap;
+
+  gap: 15px;
+
+  margin-top: 14px;
+}
+
+
+.job-meta span {
+  color: #777;
+
+  font-size: 12px;
+}
+
+
+/* =========================================================
+   JOB DESCRIPTION
+========================================================= */
+
+.job-description {
+  max-width: 750px;
+
+  margin:
+    14px 0 15px;
+
+  color: #888;
+
+  font-size: 13px;
+
+  line-height: 1.6;
+}
+
+
+/* =========================================================
+   SKILLS
+========================================================= */
+
+.job-skills {
+  display: flex;
+
+  flex-wrap: wrap;
+
+  gap: 7px;
+}
+
+
+.job-skill {
+  padding:
+    6px 10px;
+
+  border-radius: 6px;
+
+  background:
+    rgba(255, 255, 255, 0.055);
+
+  border:
+    1px solid
+    rgba(255, 255, 255, 0.09);
+
+  color: #aaa;
+
+  font-size: 11px;
+
+  transition: 0.2s ease;
+}
+
+
+.job-skill:hover {
+  color: #ffffff;
+
+  border-color:
+    rgba(229, 9, 20, 0.40);
+
+  background:
+    rgba(229, 9, 20, 0.07);
+}
+
+
+/* =========================================================
+   CARD ACTION
+========================================================= */
+
+.job-card-action {
+  min-width: 160px;
+
+  display: flex;
+
+  flex-direction: column;
+
+  align-items: flex-end;
+
+  justify-content: space-between;
+
+  gap: 25px;
+
+  position: relative;
+
+  z-index: 3;
+}
+
+
+/* =========================================================
+   SALARY
+========================================================= */
+
+.job-salary {
+  color: #ffffff;
+
+  font-size: 14px;
+
+  font-weight: 700;
+
+  text-align: right;
+}
+
+
+/* =========================================================
+   APPLY BUTTON
+========================================================= */
+
+.apply-job-button {
+  min-width: 145px;
+
+  height: 44px;
+
+  padding:
+    0 18px;
+
+  border:
+    1px solid
+    #e50914;
+
+  border-radius: 8px;
+
+  background:
+    rgba(229, 9, 20, 0.08);
+
+  color: #ff3342;
+
+  font-size: 12px;
+
+  font-weight: 800;
+
+  cursor: pointer;
+
+  transition:
+    0.25s ease;
+}
+
+
+.apply-job-button:hover {
+  background: #e50914;
+
+  color: #ffffff;
+
+  transform:
+    translateY(-2px);
+
+  box-shadow:
+    0 10px 30px
+    rgba(229, 9, 20, 0.25);
+}
+
+
+/* =========================================================
+   NO JOBS
+========================================================= */
+
+.no-jobs {
+  width: 100%;
+
+  padding:
+    80px 20px;
+
+  text-align: center;
+
+  background:
+    rgba(255, 255, 255, 0.035);
+
+  border:
+    1px solid
+    rgba(255, 255, 255, 0.10);
+
+  border-radius: 18px;
+
+  backdrop-filter: blur(20px);
+}
+
+
+.no-jobs-icon {
+  font-size: 35px;
+
+  margin-bottom: 15px;
+}
+
+
+.no-jobs h3 {
+  margin: 0;
+
+  color: #ffffff;
+
+  font-size: 24px;
+}
+
+
+.no-jobs p {
+  color: #666;
+
+  font-size: 14px;
+
+  margin:
+    10px 0 25px;
+}
+
+
+.no-jobs button {
+  height: 42px;
+
+  padding:
+    0 20px;
+
+  border:
+    1px solid
+    #e50914;
+
+  border-radius: 8px;
+
+  background:
+    rgba(229, 9, 20, 0.08);
+
+  color: #ff3342;
+
+  font-weight: 700;
+
+  cursor: pointer;
+}
+
+
+/* =========================================================
+   RESPONSIVE
+========================================================= */
+
+@media (max-width: 1000px) {
+
+  .jobs-hero {
+    padding-left: 6%;
+    padding-right: 6%;
+  }
+
+  .jobs-content {
+    padding-left: 6%;
+    padding-right: 6%;
+  }
+
+  .job-card {
+    grid-template-columns:
+      55px 1fr;
+  }
+
+  .job-card-action {
+    grid-column: 2;
+
+    flex-direction: row;
+
+    align-items: center;
+
+    justify-content: space-between;
+
+    width: 100%;
+
+    min-width: 0;
+
+    gap: 15px;
+  }
+
+  .job-salary {
+    text-align: left;
+  }
+}
+
+
+/* =========================================================
+   TABLET
+========================================================= */
+
+@media (max-width: 750px) {
+
+  .jobs-hero {
+    padding:
+      55px 5% 80px;
+  }
+
+  .jobs-content {
+    padding:
+      45px 5% 70px;
+  }
+
+  .jobs-search-container {
+    flex-direction: column;
+
+    align-items: stretch;
+
+    padding: 10px;
+  }
+
+  .jobs-search-item {
+    width: 100%;
+  }
+
+  .jobs-search-divider {
+    display: none;
+  }
+
+  .jobs-search-button {
+    width: 100%;
+  }
+
+  .jobs-header {
+    flex-direction: column;
+
+    align-items: flex-start;
+  }
+
+  .jobs-sort {
+    width: 100%;
+
+    justify-content: space-between;
+  }
+
+  .jobs-sort select {
+    flex: 1;
+  }
+
+  .jobs-filters {
+    flex-wrap: wrap;
+  }
+
+  .jobs-filters select,
+  .clear-filters-button {
+    flex: 1;
+  }
+}
+
+
+/* =========================================================
+   MOBILE
+========================================================= */
+
+@media (max-width: 550px) {
+
+  .jobs-hero {
+    padding:
+      45px 5% 70px;
+  }
+
+  .jobs-hero h1 {
+    font-size: 45px;
+
+    letter-spacing: -2px;
+  }
+
+  .jobs-hero p {
+    font-size: 14px;
+  }
+
+  .jobs-content {
+    padding:
+      40px 5% 60px;
+  }
+
+  .jobs-header h2 {
+    font-size: 25px;
+  }
+
+  .jobs-filters {
+    flex-direction: column;
+
+    align-items: stretch;
+  }
+
+  .jobs-filters select,
+  .clear-filters-button {
+    width: 100%;
+
+    flex: none;
+  }
+
+  .job-card {
+    grid-template-columns: 1fr;
+
+    gap: 18px;
+
+    padding: 20px;
+  }
+
+  .job-company-logo {
+    width: 48px;
+    height: 48px;
+  }
+
+  .job-card-top {
+    flex-direction: column;
+
+    gap: 7px;
+  }
+
+  .job-posted {
+    font-size: 10px;
+  }
+
+  .job-meta {
+    gap: 9px 15px;
+  }
+
+  .job-card-action {
+    grid-column: 1;
+
+    width: 100%;
+
+    flex-direction: row;
+
+    align-items: center;
+  }
+
+  .job-salary {
+    text-align: left;
+  }
+
+  .apply-job-button {
+    min-width: 130px;
+  }
+}
+
+
+/* =========================================================
+   SMALL MOBILE
+========================================================= */
+
+@media (max-width: 380px) {
+
+  .jobs-hero h1 {
+    font-size: 39px;
+  }
+
+  .job-card-action {
+    flex-direction: column;
+
+    align-items: stretch;
+  }
+
+  .job-salary {
+    text-align: left;
+  }
+
+  .apply-job-button {
+    width: 100%;
+  }
+}

@@ -1,0 +1,629 @@
+/* =========================================================
+   CAMPUSCONNECT COMPANY DETAILS
+   BLACK + WHITE + RED + GLASS
+========================================================= */
+
+.company-details-page {
+  min-height: 100vh;
+  width: 100%;
+  background:
+    radial-gradient(
+      circle at 15% 10%,
+      rgba(255, 23, 68, 0.10),
+      transparent 30%
+    ),
+    radial-gradient(
+      circle at 85% 80%,
+      rgba(255, 23, 68, 0.06),
+      transparent 30%
+    ),
+    #050505;
+
+  color: #ffffff;
+  padding: 40px 24px 80px;
+}
+
+/* =========================================================
+   CONTAINER
+========================================================= */
+
+.company-details-container {
+  width: 100%;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+/* =========================================================
+   BACK BUTTON
+========================================================= */
+
+.back-companies-button {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+
+  margin-bottom: 24px;
+  padding: 10px 16px;
+
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  border-radius: 12px;
+
+  color: rgba(255, 255, 255, 0.75);
+  font-size: 14px;
+  font-weight: 600;
+
+  cursor: pointer;
+  transition: all 0.25s ease;
+}
+
+.back-companies-button:hover {
+  color: #ffffff;
+
+  background: rgba(255, 23, 68, 0.10);
+  border-color: rgba(255, 23, 68, 0.45);
+
+  transform: translateX(-3px);
+}
+
+/* =========================================================
+   GLASS
+========================================================= */
+
+.company-details-page .glass {
+  background:
+    linear-gradient(
+      135deg,
+      rgba(255, 255, 255, 0.075),
+      rgba(255, 255, 255, 0.025)
+    );
+
+  border: 1px solid rgba(255, 255, 255, 0.12);
+
+  backdrop-filter: blur(24px);
+  -webkit-backdrop-filter: blur(24px);
+
+  box-shadow:
+    0 20px 60px rgba(0, 0, 0, 0.35),
+    inset 0 1px 0 rgba(255, 255, 255, 0.04);
+}
+
+/* =========================================================
+   COMPANY HEADER
+========================================================= */
+
+.company-details-header {
+  position: relative;
+
+  display: flex;
+  align-items: center;
+  gap: 28px;
+
+  padding: 36px;
+
+  border-radius: 28px;
+
+  overflow: hidden;
+}
+
+.company-details-header::before {
+  content: "";
+
+  position: absolute;
+
+  width: 260px;
+  height: 260px;
+
+  right: -100px;
+  top: -120px;
+
+  background: rgba(255, 23, 68, 0.10);
+
+  border-radius: 50%;
+
+  filter: blur(30px);
+
+  pointer-events: none;
+}
+
+/* =========================================================
+   COMPANY LOGO
+========================================================= */
+
+.company-details-logo {
+  position: relative;
+  z-index: 1;
+
+  width: 110px;
+  height: 110px;
+
+  flex-shrink: 0;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  border-radius: 26px;
+
+  background:
+    linear-gradient(
+      145deg,
+      #ff1744,
+      #b0002e
+    );
+
+  border: 1px solid rgba(255, 255, 255, 0.18);
+
+  color: #ffffff;
+
+  font-size: 42px;
+  font-weight: 800;
+
+  box-shadow:
+    0 15px 40px rgba(255, 23, 68, 0.22);
+}
+
+/* =========================================================
+   HEADER INFORMATION
+========================================================= */
+
+.company-details-header-info {
+  position: relative;
+  z-index: 1;
+
+  min-width: 0;
+}
+
+.company-details-label {
+  display: inline-block;
+
+  margin-bottom: 8px;
+
+  color: #ff1744;
+
+  font-size: 11px;
+  font-weight: 800;
+
+  letter-spacing: 2px;
+}
+
+.company-details-header-info h1 {
+  margin: 0 0 8px;
+
+  color: #ffffff;
+
+  font-size: clamp(32px, 5vw, 52px);
+  line-height: 1.05;
+
+  font-weight: 800;
+  letter-spacing: -1.5px;
+}
+
+.company-details-header-info > p {
+  margin: 0 0 18px;
+
+  color: rgba(255, 255, 255, 0.62);
+
+  font-size: 16px;
+}
+
+.company-details-meta {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 18px;
+}
+
+.company-details-meta span,
+.company-details-meta a {
+  color: rgba(255, 255, 255, 0.72);
+
+  font-size: 14px;
+  font-weight: 500;
+}
+
+.company-details-meta a {
+  color: #ff1744;
+
+  transition: color 0.2s ease;
+}
+
+.company-details-meta a:hover {
+  color: #ffffff;
+}
+
+/* =========================================================
+   MAIN GRID
+========================================================= */
+
+.company-details-grid {
+  display: grid;
+
+  grid-template-columns:
+    minmax(0, 1fr)
+    350px;
+
+  gap: 24px;
+
+  margin-top: 24px;
+}
+
+/* =========================================================
+   CARDS
+========================================================= */
+
+.company-details-card {
+  padding: 30px;
+
+  margin-bottom: 24px;
+
+  border-radius: 24px;
+}
+
+.company-details-card h2 {
+  margin: 8px 0 20px;
+
+  color: #ffffff;
+
+  font-size: 24px;
+  font-weight: 750;
+}
+
+.section-label {
+  display: block;
+
+  color: #ff1744;
+
+  font-size: 11px;
+  font-weight: 800;
+
+  letter-spacing: 1.8px;
+}
+
+/* =========================================================
+   ABOUT
+========================================================= */
+
+.company-about-text {
+  color: rgba(255, 255, 255, 0.68);
+
+  font-size: 15px;
+  line-height: 1.8;
+}
+
+/* =========================================================
+   COMPANY INFORMATION
+========================================================= */
+
+.company-info-list {
+  display: grid;
+
+  grid-template-columns: 1fr 1fr;
+
+  gap: 18px;
+}
+
+.company-info-item {
+  display: flex;
+  align-items: flex-start;
+  gap: 14px;
+
+  padding: 18px;
+
+  background: rgba(255, 255, 255, 0.035);
+
+  border: 1px solid rgba(255, 255, 255, 0.08);
+
+  border-radius: 16px;
+}
+
+.company-info-item > span {
+  width: 40px;
+  height: 40px;
+
+  flex-shrink: 0;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  border-radius: 12px;
+
+  background: rgba(255, 23, 68, 0.10);
+
+  font-size: 18px;
+}
+
+.company-info-item small {
+  display: block;
+
+  margin-bottom: 5px;
+
+  color: rgba(255, 255, 255, 0.42);
+
+  font-size: 11px;
+  font-weight: 700;
+
+  text-transform: uppercase;
+  letter-spacing: 0.8px;
+}
+
+.company-info-item p {
+  color: rgba(255, 255, 255, 0.80);
+
+  font-size: 14px;
+  line-height: 1.5;
+
+  word-break: break-word;
+}
+
+/* =========================================================
+   SIDEBAR
+========================================================= */
+
+.company-details-sidebar {
+  padding: 28px;
+
+  margin-bottom: 24px;
+
+  border-radius: 24px;
+}
+
+.company-details-sidebar h2 {
+  margin: 8px 0 12px;
+
+  color: #ffffff;
+
+  font-size: 24px;
+}
+
+.company-details-sidebar h3 {
+  margin: 10px 0;
+
+  color: #ffffff;
+
+  font-size: 20px;
+}
+
+.company-details-sidebar > p {
+  color: rgba(255, 255, 255, 0.62);
+
+  font-size: 14px;
+  line-height: 1.7;
+}
+
+/* =========================================================
+   JOBS BUTTON
+========================================================= */
+
+.company-jobs-button {
+  width: 100%;
+
+  margin-top: 22px;
+  padding: 14px 18px;
+
+  border-radius: 13px;
+
+  background: #ff1744;
+
+  color: #ffffff;
+
+  font-size: 14px;
+  font-weight: 750;
+
+  cursor: pointer;
+
+  transition:
+    transform 0.2s ease,
+    box-shadow 0.2s ease,
+    background 0.2s ease;
+}
+
+.company-jobs-button:hover {
+  background: #ff3159;
+
+  transform: translateY(-2px);
+
+  box-shadow:
+    0 12px 30px rgba(255, 23, 68, 0.25);
+}
+
+/* =========================================================
+   LOADING
+========================================================= */
+
+.company-details-loading {
+  min-height: 70vh;
+
+  display: flex;
+  flex-direction: column;
+
+  align-items: center;
+  justify-content: center;
+
+  gap: 16px;
+}
+
+.company-details-loading p {
+  color: rgba(255, 255, 255, 0.60);
+}
+
+/* =========================================================
+   LOADING SPINNER
+========================================================= */
+
+.loading-spinner {
+  width: 42px;
+  height: 42px;
+
+  border: 3px solid rgba(255, 255, 255, 0.12);
+  border-top-color: #ff1744;
+
+  border-radius: 50%;
+
+  animation: companySpinner 0.8s linear infinite;
+}
+
+@keyframes companySpinner {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+/* =========================================================
+   ERROR
+========================================================= */
+
+.company-details-error {
+  min-height: 70vh;
+
+  display: flex;
+  flex-direction: column;
+
+  align-items: center;
+  justify-content: center;
+
+  text-align: center;
+
+  padding: 30px;
+}
+
+.company-details-error > div {
+  width: 70px;
+  height: 70px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  margin-bottom: 18px;
+
+  border-radius: 20px;
+
+  background: rgba(255, 23, 68, 0.10);
+
+  font-size: 30px;
+}
+
+.company-details-error h2 {
+  margin-bottom: 8px;
+
+  color: #ffffff;
+
+  font-size: 28px;
+}
+
+.company-details-error p {
+  margin-bottom: 24px;
+
+  color: rgba(255, 255, 255, 0.58);
+}
+
+.company-details-error button {
+  padding: 13px 20px;
+
+  border-radius: 12px;
+
+  background: #ff1744;
+
+  color: #ffffff;
+
+  font-weight: 700;
+
+  cursor: pointer;
+}
+
+.company-details-error button:hover {
+  background: #ff3159;
+}
+
+/* =========================================================
+   TABLET
+========================================================= */
+
+@media (max-width: 900px) {
+
+  .company-details-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .company-details-sidebar {
+    margin-bottom: 18px;
+  }
+
+}
+
+/* =========================================================
+   MOBILE
+========================================================= */
+
+@media (max-width: 650px) {
+
+  .company-details-page {
+    padding: 24px 14px 60px;
+  }
+
+  .company-details-header {
+    flex-direction: column;
+
+    align-items: flex-start;
+
+    padding: 26px;
+
+    border-radius: 22px;
+  }
+
+  .company-details-logo {
+    width: 82px;
+    height: 82px;
+
+    border-radius: 20px;
+
+    font-size: 32px;
+  }
+
+  .company-details-header-info h1 {
+    font-size: 34px;
+  }
+
+  .company-details-meta {
+    flex-direction: column;
+
+    align-items: flex-start;
+
+    gap: 10px;
+  }
+
+  .company-details-card,
+  .company-details-sidebar {
+    padding: 22px;
+
+    border-radius: 20px;
+  }
+
+  .company-info-list {
+    grid-template-columns: 1fr;
+  }
+
+}
+
+/* =========================================================
+   SMALL MOBILE
+========================================================= */
+
+@media (max-width: 420px) {
+
+  .company-details-header-info h1 {
+    font-size: 29px;
+  }
+
+  .company-details-card h2 {
+    font-size: 21px;
+  }
+
+  .company-details-page {
+    padding-left: 10px;
+    padding-right: 10px;
+  }
+
+}

@@ -1,0 +1,943 @@
+/* =========================================
+   CAMPUSCONNECT LOGIN PAGE
+   BLACK + WHITE + RED
+   GLASSMORPHISM
+========================================= */
+
+* {
+  box-sizing: border-box;
+}
+
+.login-page {
+  width: 100%;
+  min-height: 100vh;
+
+  background: #000000;
+
+  color: #ffffff;
+
+  display: flex;
+
+  font-family:
+    Arial,
+    Helvetica,
+    sans-serif;
+
+  overflow: hidden;
+}
+
+
+/* =========================================
+   LEFT SIDE
+========================================= */
+
+.login-left {
+  width: 50%;
+  height: 100vh;
+
+  background: #000000;
+
+  display: flex;
+  align-items: center;
+
+  padding: 60px 8%;
+
+  position: relative;
+
+  overflow: hidden;
+
+  border-right: 1px solid #181818;
+}
+
+
+/* Red glow */
+
+.login-left::before {
+  content: "";
+
+  position: absolute;
+
+  width: 500px;
+  height: 500px;
+
+  left: -300px;
+  bottom: -300px;
+
+  background: #e50914;
+
+  border-radius: 50%;
+
+  filter: blur(170px);
+
+  opacity: 0.08;
+
+  pointer-events: none;
+}
+
+
+/* Top red glow */
+
+.login-left::after {
+  content: "";
+
+  position: absolute;
+
+  width: 300px;
+  height: 300px;
+
+  left: -170px;
+  top: -170px;
+
+  background: #e50914;
+
+  border-radius: 50%;
+
+  filter: blur(130px);
+
+  opacity: 0.07;
+
+  pointer-events: none;
+}
+
+
+.left-content {
+  width: 100%;
+
+  max-width: 600px;
+
+  position: relative;
+
+  z-index: 2;
+}
+
+
+/* =========================================
+   LOGO
+========================================= */
+
+.campus-logo {
+  display: flex;
+
+  align-items: center;
+
+  gap: 13px;
+
+  margin-bottom: 90px;
+}
+
+
+.logo-box {
+  width: 48px;
+  height: 48px;
+
+  background: #e50914;
+
+  border-radius: 10px;
+
+  display: flex;
+
+  align-items: center;
+  justify-content: center;
+
+  color: #ffffff;
+
+  font-size: 25px;
+
+  font-weight: 800;
+
+  box-shadow:
+    0 0 25px rgba(229, 9, 20, 0.25);
+}
+
+
+.logo-text {
+  color: #ffffff;
+
+  font-size: 25px;
+
+  font-weight: 700;
+}
+
+
+.logo-text span {
+  color: #e50914;
+}
+
+
+/* =========================================
+   HERO
+========================================= */
+
+.hero-label {
+  color: #e50914;
+
+  font-size: 12px;
+
+  font-weight: 800;
+
+  letter-spacing: 3px;
+
+  margin-bottom: 22px;
+}
+
+
+.hero-text h1 {
+  margin: 0;
+
+  color: #ffffff;
+
+  font-size: clamp(48px, 5vw, 76px);
+
+  line-height: 0.96;
+
+  font-weight: 700;
+
+  letter-spacing: -3px;
+}
+
+
+.hero-text h1 span {
+  color: #e50914;
+}
+
+
+.hero-text p {
+  max-width: 500px;
+
+  margin-top: 30px;
+
+  color: #858585;
+
+  font-size: 16px;
+
+  line-height: 1.7;
+}
+
+
+/* =========================================
+   RED LINE
+========================================= */
+
+.red-line {
+  width: 80px;
+
+  height: 4px;
+
+  background: #e50914;
+
+  margin-top: 40px;
+
+  box-shadow:
+    0 0 20px rgba(229, 9, 20, 0.35);
+}
+
+
+/* =========================================
+   STATS
+========================================= */
+
+.stats {
+  display: flex;
+
+  gap: 55px;
+
+  margin-top: 40px;
+}
+
+
+.stat {
+  display: flex;
+
+  flex-direction: column;
+
+  gap: 6px;
+}
+
+
+.stat strong {
+  color: #ffffff;
+
+  font-size: 25px;
+
+  font-weight: 700;
+}
+
+
+.stat span {
+  color: #666666;
+
+  font-size: 11px;
+
+  text-transform: uppercase;
+
+  letter-spacing: 1px;
+}
+
+
+/* =========================================
+   RIGHT SIDE
+========================================= */
+
+.login-right {
+  width: 50%;
+  height: 100vh;
+
+  display: flex;
+
+  align-items: center;
+  justify-content: center;
+
+  padding: 45px 7%;
+
+  position: relative;
+
+  overflow: hidden;
+
+  background:
+    radial-gradient(
+      circle at 85% 15%,
+      rgba(229, 9, 20, 0.12),
+      transparent 30%
+    ),
+    #000000;
+}
+
+
+/* Red glow behind glass */
+
+.login-right::before {
+  content: "";
+
+  position: absolute;
+
+  width: 500px;
+  height: 500px;
+
+  right: -220px;
+  bottom: -220px;
+
+  background: #e50914;
+
+  border-radius: 50%;
+
+  filter: blur(180px);
+
+  opacity: 0.13;
+
+  pointer-events: none;
+}
+
+
+/* White glass light */
+
+.login-right::after {
+  content: "";
+
+  position: absolute;
+
+  width: 400px;
+  height: 400px;
+
+  left: -250px;
+  top: -200px;
+
+  background: #ffffff;
+
+  border-radius: 50%;
+
+  filter: blur(180px);
+
+  opacity: 0.035;
+
+  pointer-events: none;
+}
+
+
+/* =========================================
+   GLASS CARD
+========================================= */
+
+.glass-card {
+  width: 100%;
+
+  max-width: 560px;
+
+  /*
+    Same visual height as the left side.
+    This prevents the right section from
+    looking too short.
+  */
+
+  min-height: 700px;
+
+  padding: 65px 60px;
+
+  display: flex;
+
+  flex-direction: column;
+
+  justify-content: center;
+
+  position: relative;
+
+  z-index: 5;
+
+  /* Transparent glass */
+
+  background:
+    linear-gradient(
+      135deg,
+      rgba(255, 255, 255, 0.095),
+      rgba(255, 255, 255, 0.025)
+    );
+
+  /* Blur behind glass */
+
+  backdrop-filter: blur(30px);
+
+  -webkit-backdrop-filter: blur(30px);
+
+  /* Glass border */
+
+  border: 1px solid rgba(255, 255, 255, 0.22);
+
+  border-radius: 30px;
+
+  /* Shadow */
+
+  box-shadow:
+    0 30px 90px rgba(0, 0, 0, 0.6),
+    inset 0 1px 0 rgba(255, 255, 255, 0.12);
+
+  overflow: hidden;
+}
+
+
+/* Glass diagonal reflection */
+
+.glass-card::before {
+  content: "";
+
+  position: absolute;
+
+  width: 250px;
+  height: 900px;
+
+  top: -250px;
+  right: 40px;
+
+  background:
+    linear-gradient(
+      90deg,
+      transparent,
+      rgba(255, 255, 255, 0.035),
+      transparent
+    );
+
+  transform: rotate(28deg);
+
+  pointer-events: none;
+}
+
+
+/* =========================================
+   LOGIN HEADER
+========================================= */
+
+.login-header {
+  position: relative;
+
+  z-index: 2;
+}
+
+
+.welcome-label {
+  color: #ff1b2d;
+
+  font-size: 14px;
+
+  font-weight: 800;
+
+  letter-spacing: 3px;
+
+  margin-bottom: 17px;
+}
+
+
+.login-header h2 {
+  margin: 0;
+
+  color: #ffffff;
+
+  font-size: 55px;
+
+  font-weight: 600;
+
+  line-height: 1;
+
+  letter-spacing: -2px;
+}
+
+
+.login-header p {
+  color: #999999;
+
+  font-size: 17px;
+
+  margin: 18px 0 45px;
+}
+
+
+/* =========================================
+   FORM
+========================================= */
+
+form {
+  position: relative;
+
+  z-index: 2;
+}
+
+
+.form-group {
+  margin-bottom: 27px;
+}
+
+
+.form-group label {
+  display: block;
+
+  color: #ffffff;
+
+  font-size: 14px;
+
+  font-weight: 600;
+
+  margin-bottom: 10px;
+}
+
+
+.form-group input {
+  width: 100%;
+
+  height: 62px;
+
+  padding: 0 18px;
+
+  border-radius: 10px;
+
+  outline: none;
+
+  color: #ffffff;
+
+  font-size: 15px;
+
+  background:
+    rgba(0, 0, 0, 0.28);
+
+  border: 1px solid
+    rgba(255, 255, 255, 0.20);
+
+  backdrop-filter: blur(12px);
+
+  -webkit-backdrop-filter: blur(12px);
+
+  transition: 0.25s ease;
+}
+
+
+.form-group input::placeholder {
+  color: rgba(255, 255, 255, 0.36);
+}
+
+
+.form-group input:hover {
+  border-color:
+    rgba(255, 255, 255, 0.35);
+
+  background:
+    rgba(255, 255, 255, 0.045);
+}
+
+
+.form-group input:focus {
+  border-color: #e50914;
+
+  background:
+    rgba(229, 9, 20, 0.055);
+
+  box-shadow:
+    0 0 0 2px rgba(229, 9, 20, 0.12);
+}
+
+
+/* =========================================
+   PASSWORD
+========================================= */
+
+.password-wrapper {
+  position: relative;
+}
+
+
+.password-wrapper input {
+  padding-right: 75px;
+}
+
+
+.show-password {
+  position: absolute;
+
+  right: 16px;
+
+  top: 50%;
+
+  transform: translateY(-50%);
+
+  border: none;
+
+  background: transparent;
+
+  color: #ff1b2d;
+
+  font-size: 12px;
+
+  font-weight: 700;
+
+  cursor: pointer;
+
+  z-index: 5;
+}
+
+
+.show-password:hover {
+  color: #ff4b58;
+}
+
+
+/* =========================================
+   LOGIN BUTTON
+========================================= */
+
+.login-button {
+  width: 100%;
+
+  height: 62px;
+
+  margin-top: 8px;
+
+  border: none;
+
+  border-radius: 10px;
+
+  background: #e50914;
+
+  color: #ffffff;
+
+  font-size: 16px;
+
+  font-weight: 700;
+
+  cursor: pointer;
+
+  display: flex;
+
+  align-items: center;
+
+  justify-content: center;
+
+  gap: 13px;
+
+  transition: 0.25s ease;
+
+  box-shadow:
+    0 10px 30px rgba(229, 9, 20, 0.20);
+}
+
+
+.login-button span {
+  font-size: 22px;
+
+  transition: 0.2s ease;
+}
+
+
+.login-button:hover {
+  background: #ff1725;
+
+  transform: translateY(-2px);
+
+  box-shadow:
+    0 15px 40px rgba(229, 9, 20, 0.30);
+}
+
+
+.login-button:hover span {
+  transform: translateX(5px);
+}
+
+
+.login-button:disabled {
+  opacity: 0.65;
+
+  cursor: not-allowed;
+
+  transform: none;
+
+  box-shadow: none;
+}
+
+
+/* =========================================
+   REGISTER
+========================================= */
+
+.register-area {
+  position: relative;
+
+  z-index: 2;
+
+  display: flex;
+
+  justify-content: center;
+
+  gap: 7px;
+
+  margin-top: 32px;
+
+  font-size: 14px;
+}
+
+
+.register-area span {
+  color: #777777;
+}
+
+
+.register-area a {
+  color: #ff1b2d;
+
+  font-weight: 600;
+
+  text-decoration: none;
+}
+
+
+.register-area a:hover {
+  color: #ff4b58;
+
+  text-decoration: underline;
+}
+
+
+/* =========================================
+   TABLET
+========================================= */
+
+@media (max-width: 1000px) {
+
+  .login-left {
+    padding: 50px 5%;
+  }
+
+  .login-right {
+    padding: 35px 5%;
+  }
+
+  .campus-logo {
+    margin-bottom: 70px;
+  }
+
+  .hero-text h1 {
+    font-size: 52px;
+  }
+
+  .stats {
+    gap: 30px;
+  }
+
+  .glass-card {
+    min-height: 650px;
+
+    padding: 50px 40px;
+  }
+
+  .login-header h2 {
+    font-size: 46px;
+  }
+}
+
+
+/* =========================================
+   MOBILE
+========================================= */
+
+@media (max-width: 700px) {
+
+  .login-page {
+    display: block;
+
+    overflow-y: auto;
+  }
+
+
+  .login-left {
+    width: 100%;
+
+    height: auto;
+
+    min-height: 550px;
+
+    padding: 50px 30px;
+
+    border-right: none;
+
+    border-bottom: 1px solid #181818;
+  }
+
+
+  .login-right {
+    width: 100%;
+
+    height: auto;
+
+    min-height: 700px;
+
+    padding: 45px 20px 60px;
+  }
+
+
+  .campus-logo {
+    margin-bottom: 70px;
+  }
+
+
+  .hero-text h1 {
+    font-size: 48px;
+  }
+
+
+  .glass-card {
+    min-height: 600px;
+
+    padding: 50px 30px;
+
+    border-radius: 25px;
+  }
+
+
+  .login-header h2 {
+    font-size: 43px;
+  }
+
+}
+
+
+/* =========================================
+   SMALL MOBILE
+========================================= */
+
+@media (max-width: 450px) {
+
+  .login-left {
+    padding: 40px 22px;
+
+    min-height: 500px;
+  }
+
+
+  .logo-box {
+    width: 42px;
+    height: 42px;
+
+    font-size: 21px;
+  }
+
+
+  .logo-text {
+    font-size: 21px;
+  }
+
+
+  .campus-logo {
+    margin-bottom: 60px;
+  }
+
+
+  .hero-text h1 {
+    font-size: 40px;
+
+    letter-spacing: -2px;
+  }
+
+
+  .hero-text p {
+    font-size: 14px;
+  }
+
+
+  .stats {
+    gap: 20px;
+  }
+
+
+  .stat strong {
+    font-size: 20px;
+  }
+
+
+  .stat span {
+    font-size: 9px;
+  }
+
+
+  .login-right {
+    padding: 35px 15px 50px;
+  }
+
+
+  .glass-card {
+    min-height: 560px;
+
+    padding: 40px 22px;
+
+    border-radius: 22px;
+  }
+
+
+  .welcome-label {
+    font-size: 12px;
+  }
+
+
+  .login-header h2 {
+    font-size: 38px;
+  }
+
+
+  .login-header p {
+    font-size: 14px;
+
+    margin-bottom: 35px;
+  }
+
+
+  .form-group input {
+    height: 56px;
+  }
+
+
+  .login-button {
+    height: 56px;
+  }
+
+
+  .register-area {
+    flex-direction: column;
+
+    align-items: center;
+
+    gap: 5px;
+  }
+
+}
