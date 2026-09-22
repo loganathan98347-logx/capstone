@@ -43,78 +43,116 @@ function Applications() {
 
       const user = getLoggedInUser();
 
+      // -------------------------------------------------------
+      // CHECK USER
+      // -------------------------------------------------------
+
       if (!user || !user.id) {
-        setError("User information not found. Please login again.");
+        setError(
+          "User information not found. Please login again."
+        );
+
         setLoading(false);
         return;
       }
 
-      console.log("Fetching applications for user:", user.id);
+      console.log(
+        "Fetching applications for user:",
+        user.id
+      );
+
+      // -------------------------------------------------------
+      // API REQUEST
+      // -------------------------------------------------------
 
       const response = await axios.get(
         `http://localhost:8081/api/applications/student/${user.id}`
       );
 
-      console.log("Applications from backend:", response.data);
+      console.log(
+        "Applications from backend:",
+        response.data
+      );
 
-      const backendApplications = Array.isArray(response.data)
-        ? response.data
-        : [];
+      // -------------------------------------------------------
+      // CHECK RESPONSE
+      // -------------------------------------------------------
 
-      const formattedApplications = backendApplications.map(
-        (application) => {
-          const job = application.job || {};
-          const student = application.student || {};
+      const backendApplications =
+        Array.isArray(response.data)
+          ? response.data
+          : [];
+
+      // -------------------------------------------------------
+      // FORMAT APPLICATIONS
+      // -------------------------------------------------------
+
+      const formattedApplications =
+        backendApplications.map((application) => {
 
           return {
             id: application.id,
 
-            jobId: job.id,
+            jobId: application.jobId,
 
             jobTitle:
-              job.title || "Untitled Job",
+              application.jobTitle ||
+              "Untitled Job",
 
             company:
-              job.company ||
-              job.companyName ||
+              application.company ||
               "Company",
 
             location:
-              job.location ||
+              application.location ||
               "Not specified",
 
             type:
-              formatJobType(job.jobType),
+              formatJobType(
+                application.jobType
+              ),
 
             appliedDate:
-              formatDate(application.appliedAt),
+              formatDate(
+                application.appliedAt
+              ),
 
             status:
-              application.status || "APPLIED",
+              application.status ||
+              "APPLIED",
 
             salary:
-              job.salary !== null &&
-              job.salary !== undefined
-                ? `₹${Number(job.salary).toLocaleString("en-IN")}`
-                : "Not specified",
+              application.salary ||
+              "Not specified",
 
             skills:
-              Array.isArray(job.skills)
-                ? job.skills
+              Array.isArray(
+                application.skills
+              )
+                ? application.skills
                 : [],
 
             studentName:
-              student.name || "",
+              application.studentName ||
+              "",
 
             studentEmail:
-              student.email || "",
+              application.studentEmail ||
+              "",
           };
-        }
+        });
+
+      console.log(
+        "Formatted applications:",
+        formattedApplications
       );
 
-      setApplications(formattedApplications);
+      setApplications(
+        formattedApplications
+      );
 
     } catch (error) {
+
       console.error(
         "Error loading applications:",
         error
@@ -125,15 +163,33 @@ function Applications() {
         error.response?.data
       );
 
-      if (error.response?.status === 404) {
+      // -------------------------------------------------------
+      // ERROR MESSAGE
+      // -------------------------------------------------------
+
+      if (
+        error.response?.data?.error
+      ) {
+
+        setError(
+          error.response.data.error
+        );
+
+      } else if (
+        error.response?.status === 404
+      ) {
+
         setApplications([]);
+
       } else {
+
         setError(
           "Unable to load your applications. Please make sure the backend is running."
         );
       }
 
     } finally {
+
       setLoading(false);
     }
   };
@@ -143,11 +199,15 @@ function Applications() {
   // =========================================================
 
   const formatJobType = (type) => {
+
     if (!type) {
       return "Other";
     }
 
-    const value = type.toString().toUpperCase();
+    const value =
+      type
+        .toString()
+        .toUpperCase();
 
     if (value === "INTERNSHIP") {
       return "Internship";
@@ -161,6 +221,10 @@ function Applications() {
       return "Part-time";
     }
 
+    if (value === "CONTRACT") {
+      return "Contract";
+    }
+
     return type;
   };
 
@@ -169,24 +233,35 @@ function Applications() {
   // =========================================================
 
   const formatDate = (date) => {
+
     if (!date) {
       return "Recently";
     }
 
     try {
-      const value = new Date(date);
 
-      if (Number.isNaN(value.getTime())) {
+      const value =
+        new Date(date);
+
+      if (
+        Number.isNaN(
+          value.getTime()
+        )
+      ) {
         return "Recently";
       }
 
-      return value.toLocaleDateString("en-IN", {
-        day: "2-digit",
-        month: "short",
-        year: "numeric",
-      });
+      return value.toLocaleDateString(
+        "en-IN",
+        {
+          day: "2-digit",
+          month: "short",
+          year: "numeric",
+        }
+      );
 
     } catch {
+
       return "Recently";
     }
   };
@@ -196,7 +271,9 @@ function Applications() {
   // =========================================================
 
   const getStatusLabel = (status) => {
+
     switch (status) {
+
       case "APPLIED":
         return "Applied";
 
@@ -218,7 +295,7 @@ function Applications() {
   };
 
   // =========================================================
-  // FILTER
+  // FILTER APPLICATIONS
   // =========================================================
 
   const filteredApplications =
@@ -257,10 +334,11 @@ function Applications() {
     ).length;
 
   // =========================================================
-  // LOADING
+  // LOADING SCREEN
   // =========================================================
 
   if (loading) {
+
     return (
       <div className="applications-page">
 
@@ -309,7 +387,7 @@ function Applications() {
   }
 
   // =========================================================
-  // RETURN
+  // MAIN PAGE
   // =========================================================
 
   return (
@@ -482,11 +560,15 @@ function Applications() {
             </h2>
 
             <p>
+
               {filteredApplications.length}{" "}
+
               {filteredApplications.length === 1
                 ? "application"
                 : "applications"}{" "}
+
               found
+
             </p>
 
           </div>
@@ -502,10 +584,13 @@ function Applications() {
                   ? "active"
                   : ""
               }
-              onClick={() => setFilter("ALL")}
+              onClick={() =>
+                setFilter("ALL")
+              }
             >
               All
             </button>
+
 
             <button
               className={
@@ -520,6 +605,7 @@ function Applications() {
               Applied
             </button>
 
+
             <button
               className={
                 filter === "SHORTLISTED"
@@ -532,6 +618,7 @@ function Applications() {
             >
               Shortlisted
             </button>
+
 
             <button
               className={
@@ -546,6 +633,7 @@ function Applications() {
               Interview
             </button>
 
+
             <button
               className={
                 filter === "OFFERED"
@@ -558,6 +646,7 @@ function Applications() {
             >
               Offers
             </button>
+
 
             <button
               className={
@@ -593,7 +682,9 @@ function Applications() {
                   key={application.id}
                 >
 
-                  {/* COMPANY LOGO */}
+                  {/* =================================================
+                      COMPANY LOGO
+                  ================================================= */}
 
                   <div className="application-company-logo">
 
@@ -606,7 +697,9 @@ function Applications() {
                   </div>
 
 
-                  {/* MAIN DETAILS */}
+                  {/* =================================================
+                      MAIN DETAILS
+                  ================================================= */}
 
                   <div className="application-main">
 
@@ -615,15 +708,23 @@ function Applications() {
                       <div>
 
                         <span className="application-type">
+
                           {application.type}
+
                         </span>
 
+
                         <h3>
+
                           {application.jobTitle}
+
                         </h3>
 
+
                         <h4>
+
                           {application.company}
+
                         </h4>
 
                       </div>
@@ -649,7 +750,9 @@ function Applications() {
                     </div>
 
 
-                    {/* META */}
+                    {/* =================================================
+                        META
+                    ================================================= */}
 
                     <div className="application-meta">
 
@@ -669,7 +772,9 @@ function Applications() {
                     </div>
 
 
-                    {/* SKILLS */}
+                    {/* =================================================
+                        SKILLS
+                    ================================================= */}
 
                     {application.skills.length > 0 && (
 
@@ -694,7 +799,9 @@ function Applications() {
                   </div>
 
 
-                  {/* ACTION */}
+                  {/* =================================================
+                      ACTION
+                  ================================================= */}
 
                   <div className="application-action">
 
@@ -732,9 +839,11 @@ function Applications() {
               </h2>
 
               <p>
+
                 {filter === "ALL"
                   ? "You haven't applied to any jobs yet."
                   : "You haven't applied to any jobs in this category yet."}
+
               </p>
 
               <button

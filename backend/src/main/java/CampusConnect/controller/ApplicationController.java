@@ -1,5 +1,6 @@
 package CampusConnect.controller;
 
+import CampusConnect.dto.ApplicationResponse;
 import CampusConnect.entity.Application;
 import CampusConnect.service.ApplicationService;
 
@@ -21,7 +22,6 @@ public class ApplicationController {
     ) {
         this.applicationService = applicationService;
     }
-
 
     // =========================================================
     // STUDENT APPLY FOR JOB
@@ -70,19 +70,28 @@ public class ApplicationController {
         }
     }
 
-
     // =========================================================
-    // GET STUDENT APPLICATIONS
+    // GET ALL APPLICATIONS FOR ONE STUDENT
+    // =========================================================
+    //
+    // React calls:
+    //
+    // GET /api/applications/student/{userId}
+    //
+    // Example:
+    //
+    // GET /api/applications/student/5
+    //
     // =========================================================
 
-    @GetMapping("/student")
+    @GetMapping("/student/{userId}")
     public ResponseEntity<?> getStudentApplications(
-            @RequestParam Long userId
+            @PathVariable Long userId
     ) {
 
         try {
 
-            List<Application> applications =
+            List<ApplicationResponse> applications =
                     applicationService
                             .getStudentApplications(userId);
 
@@ -100,7 +109,6 @@ public class ApplicationController {
                     );
         }
     }
-
 
     // =========================================================
     // GET APPLICATIONS FOR ONE JOB
@@ -132,7 +140,6 @@ public class ApplicationController {
         }
     }
 
-
     // =========================================================
     // GET ALL APPLICATIONS FOR COMPANY
     // =========================================================
@@ -162,7 +169,6 @@ public class ApplicationController {
                     );
         }
     }
-
 
     // =========================================================
     // UPDATE APPLICATION STATUS
@@ -211,7 +217,6 @@ public class ApplicationController {
                     );
         }
     }
-
 
     // =========================================================
     // GET APPLICATION BY ID

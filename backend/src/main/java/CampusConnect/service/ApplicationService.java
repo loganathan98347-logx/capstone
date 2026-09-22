@@ -1,14 +1,15 @@
 package CampusConnect.service;
 
+import CampusConnect.dto.ApplicationResponse;
 import CampusConnect.entity.Application;
 import CampusConnect.entity.Company;
 import CampusConnect.entity.Job;
+import CampusConnect.entity.Skill;
 import CampusConnect.entity.Student;
 import CampusConnect.repository.ApplicationRepository;
 import CampusConnect.repository.CompanyRepository;
 import CampusConnect.repository.JobRepository;
 import CampusConnect.repository.StudentRepository;
-
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
@@ -35,7 +36,7 @@ public class ApplicationService {
     }
 
     // =========================================================
-    // STUDENT APPLY FOR JOB
+    // APPLY FOR JOB
     // =========================================================
 
     public Application applyForJob(Long userId, Long jobId) {
@@ -54,11 +55,10 @@ public class ApplicationService {
                 );
 
         boolean alreadyApplied =
-                applicationRepository
-                        .existsByStudent_IdAndJob_Id(
-                                student.getId(),
-                                job.getId()
-                        );
+                applicationRepository.existsByStudent_IdAndJob_Id(
+                        student.getId(),
+                        job.getId()
+                );
 
         if (alreadyApplied) {
             throw new RuntimeException(
@@ -76,12 +76,11 @@ public class ApplicationService {
         return applicationRepository.save(application);
     }
 
-
     // =========================================================
     // GET STUDENT APPLICATIONS
     // =========================================================
 
-    public List<Application> getStudentApplications(Long userId) {
+    public List<ApplicationResponse> getStudentApplications(Long userId) {
 
         Student student = studentRepository.findByUserId(userId);
 
@@ -91,11 +90,132 @@ public class ApplicationService {
             );
         }
 
-        return applicationRepository.findByStudent_Id(
-                student.getId()
-        );
+        List<Application> applications =
+                applicationRepository.findByStudent_Id(student.getId());
+
+        return applications.stream()
+                .map(this::convertToResponse)
+                .toList();
     }
 
+    // =========================================================
+    // CONVERT APPLICATION ENTITY TO RESPONSE
+    // =========================================================
+
+    private ApplicationResponse convertToResponse(
+            Application application
+    ) {
+
+        ApplicationResponse response =
+                new ApplicationResponse();
+
+        response.setId(application.getId());
+
+        response.setStatus(
+                application.getStatus()
+        );
+
+        if (application.getAppliedAt() != null) {
+            response.setAppliedAt(
+                    application.getAppliedAt().toString()
+            );
+        }
+
+        // -----------------------------------------------------
+        // STUDENT
+        // -----------------------------------------------------
+
+        Student student = application.getStudent();
+
+        if (student != null) {
+
+            response.setStudentName(
+                    student.getName()
+            );
+
+            response.setStudentEmail(
+                    student.getEmail()
+            );
+        }
+
+        // -----------------------------------------------------
+        // JOB
+        // -----------------------------------------------------
+
+        Job job = application.getJob();
+
+        if (job != null) {
+
+            response.setJobId(
+                    job.getId()
+            );
+
+            response.setJobTitle(
+                    job.getTitle()
+            );
+
+            response.setLocation(
+                    job.getLocation()
+            );
+
+            response.setJobType(
+                    job.getJobType()
+            );
+
+            response.setSalary(
+                    job.getSalary()
+            );
+
+            // -------------------------------------------------
+            // COMPANY
+            // -------------------------------------------------
+
+            Company company = job.getCompany();
+
+            if (company != null) {
+
+                response.setCompany(
+                        company.getName()
+                );
+            } else {
+
+                response.setCompany(
+                        "Company"
+                );
+            }
+
+            // -------------------------------------------------
+            // SKILLS
+            // -------------------------------------------------
+
+            if (job.getSkills() != null) {
+
+                List<String> skillNames =
+                        job.getSkills()
+                                .stream()
+                                .filter(skill -> skill != null)
+                                .map(Skill::getName)
+                                .filter(name -> name != null)
+                                .toList();
+
+                response.setSkills(skillNames);
+
+            } else {
+
+                response.setSkills(
+                        List.of()
+                );
+            }
+
+        } else {
+
+            response.setSkills(
+                    List.of()
+            );
+        }
+
+        return response;
+    }
 
     // =========================================================
     // GET APPLICATION BY ID
@@ -111,7 +231,6 @@ public class ApplicationService {
                 );
     }
 
-
     // =========================================================
     // GET APPLICATIONS FOR A JOB
     // =========================================================
@@ -120,7 +239,9 @@ public class ApplicationService {
 
         Job job = jobRepository.findById(jobId)
                 .orElseThrow(() ->
-                        new RuntimeException("Job not found")
+                        new RuntimeException(
+                                "Job not found"
+                        )
                 );
 
         return applicationRepository.findByJob_Id(
@@ -128,22 +249,24 @@ public class ApplicationService {
         );
     }
 
-
     // =========================================================
-    // GET ALL APPLICATIONS FOR COMPANY
+    // GET COMPANY APPLICATIONS
     // =========================================================
 
     public List<Application> getCompanyApplications(Long userId) {
 
-        Company company = companyRepository.findByUserId(userId)
-                .orElseThrow(() ->
-                        new RuntimeException(
-                                "Company profile not found for this user"
-                        )
-                );
+        Company company =
+                companyRepository.findByUserId(userId)
+                        .orElseThrow(() ->
+                                new RuntimeException(
+                                        "Company profile not found for this user"
+                                )
+                        );
 
         List<Job> companyJobs =
-                jobRepository.findByCompanyId(company.getId());
+                jobRepository.findByCompanyId(
+                        company.getId()
+                );
 
         return companyJobs.stream()
                 .flatMap(job ->
@@ -153,7 +276,6 @@ public class ApplicationService {
                 )
                 .toList();
     }
-
 
     // =========================================================
     // UPDATE APPLICATION STATUS
@@ -173,6 +295,7 @@ public class ApplicationService {
                         );
 
         if (status == null || status.trim().isEmpty()) {
+
             throw new RuntimeException(
                     "Application status is required"
             );
@@ -183,16 +306,23 @@ public class ApplicationService {
 
         if (!normalizedStatus.equals("APPLIED")
                 && !normalizedStatus.equals("SHORTLISTED")
-                && !normalizedStatus.equals("REJECTED")
-                && !normalizedStatus.equals("SELECTED")) {
+                && !normalizedStatus.equals("INTERVIEW")
+                && !normalizedStatus.equals("OFFERED")
+                && !normalizedStatus.equals("REJECTED")) {
 
             throw new RuntimeException(
-                    "Invalid application status"
+                    "Invalid application status. " +
+                    "Allowed values: APPLIED, SHORTLISTED, " +
+                    "INTERVIEW, OFFERED, REJECTED"
             );
         }
 
-        application.setStatus(normalizedStatus);
+        application.setStatus(
+                normalizedStatus
+        );
 
-        return applicationRepository.save(application);
+        return applicationRepository.save(
+                application
+        );
     }
 }

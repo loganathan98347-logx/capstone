@@ -10,6 +10,7 @@ import CampusConnect.repository.StudentRepository;
 
 import CampusConnect.service.AuthService;
 import CampusConnect.service.OtpService;
+import CampusConnect.service.EmailService;
 
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -23,20 +24,27 @@ public class AuthController {
 
     private final AuthService authService;
     private final OtpService otpService;
+    private final EmailService emailService;
+
     private final CompanyRepository companyRepository;
     private final StudentRepository studentRepository;
+
 
     public AuthController(
             AuthService authService,
             OtpService otpService,
+            EmailService emailService,
             CompanyRepository companyRepository,
             StudentRepository studentRepository) {
 
         this.authService = authService;
         this.otpService = otpService;
+        this.emailService = emailService;
+
         this.companyRepository = companyRepository;
         this.studentRepository = studentRepository;
     }
+
 
     // ==============================
     // REGISTER
@@ -58,7 +66,10 @@ public class AuthController {
             String graduationYear = request.get("graduationYear");
             String cgpa = request.get("cgpa");
 
+
+            // ==============================
             // NAME
+            // ==============================
 
             if (name == null || name.trim().isEmpty()) {
 
@@ -69,7 +80,10 @@ public class AuthController {
                         ));
             }
 
+
+            // ==============================
             // EMAIL
+            // ==============================
 
             if (email == null || email.trim().isEmpty()) {
 
@@ -80,7 +94,10 @@ public class AuthController {
                         ));
             }
 
+
+            // ==============================
             // PASSWORD
+            // ==============================
 
             if (password == null || password.isEmpty()) {
 
@@ -100,7 +117,10 @@ public class AuthController {
                         ));
             }
 
+
+            // ==============================
             // ROLE
+            // ==============================
 
             if (role == null || role.trim().isEmpty()) {
 
@@ -111,7 +131,10 @@ public class AuthController {
                         ));
             }
 
+
+            // ==============================
             // COMPANY VALIDATION
+            // ==============================
 
             if (role.equalsIgnoreCase("COMPANY")) {
 
@@ -126,7 +149,10 @@ public class AuthController {
                 }
             }
 
+
+            // ==============================
             // STUDENT VALIDATION
+            // ==============================
 
             if (role.equalsIgnoreCase("STUDENT")) {
 
@@ -140,6 +166,7 @@ public class AuthController {
                             ));
                 }
 
+
                 if (graduationYear == null ||
                         graduationYear.trim().isEmpty()) {
 
@@ -149,6 +176,7 @@ public class AuthController {
                                     "Graduation year is required"
                             ));
                 }
+
 
                 if (cgpa == null ||
                         cgpa.trim().isEmpty()) {
@@ -160,7 +188,10 @@ public class AuthController {
                             ));
                 }
 
-                // Graduation year validation
+
+                // ==============================
+                // GRADUATION YEAR VALIDATION
+                // ==============================
 
                 try {
 
@@ -187,7 +218,10 @@ public class AuthController {
                             ));
                 }
 
-                // CGPA validation
+
+                // ==============================
+                // CGPA VALIDATION
+                // ==============================
 
                 try {
 
@@ -216,7 +250,10 @@ public class AuthController {
                 }
             }
 
+
+            // ==============================
             // CHECK EMAIL
+            // ==============================
 
             if (authService.emailExists(email.trim())) {
 
@@ -227,7 +264,10 @@ public class AuthController {
                         ));
             }
 
+
+            // ==============================
             // SEND EMAIL OTP
+            // ==============================
 
             otpService.generateOtp(
                     email.trim(),
@@ -240,6 +280,7 @@ public class AuthController {
                     cgpa
             );
 
+
             return ResponseEntity.ok(
                     Map.of(
                             "message",
@@ -250,6 +291,7 @@ public class AuthController {
                     )
             );
 
+
         } catch (RuntimeException e) {
 
             return ResponseEntity.badRequest()
@@ -259,6 +301,7 @@ public class AuthController {
                     ));
         }
     }
+
 
 
     // ==============================
@@ -274,7 +317,10 @@ public class AuthController {
             String email = request.get("email");
             String otp = request.get("otp");
 
+
+            // ==============================
             // EMAIL
+            // ==============================
 
             if (email == null ||
                     email.trim().isEmpty()) {
@@ -286,7 +332,10 @@ public class AuthController {
                         ));
             }
 
+
+            // ==============================
             // OTP
+            // ==============================
 
             if (otp == null ||
                     otp.trim().isEmpty()) {
@@ -298,6 +347,7 @@ public class AuthController {
                         ));
             }
 
+
             if (!otp.matches("^[0-9]{6}$")) {
 
                 return ResponseEntity.badRequest()
@@ -307,13 +357,17 @@ public class AuthController {
                         ));
             }
 
+
+            // ==============================
             // VERIFY OTP
+            // ==============================
 
             boolean verified =
                     otpService.verifyOtp(
                             email.trim(),
                             otp.trim()
                     );
+
 
             if (!verified) {
 
@@ -324,12 +378,16 @@ public class AuthController {
                         ));
             }
 
+
+            // ==============================
             // GET REGISTRATION DATA
+            // ==============================
 
             EmailOtp emailOtp =
                     otpService.getLatestOtp(
                             email.trim()
                     );
+
 
             if (emailOtp == null) {
 
@@ -340,7 +398,10 @@ public class AuthController {
                         ));
             }
 
+
+            // ==============================
             // CREATE USER
+            // ==============================
 
             User user =
                     authService.register(
@@ -350,9 +411,11 @@ public class AuthController {
                             emailOtp.getRole()
                     );
 
+
             user.setVerified(true);
 
             authService.saveUser(user);
+
 
             // ==============================
             // CREATE STUDENT
@@ -365,17 +428,21 @@ public class AuthController {
                 Student student =
                         new Student();
 
+
                 student.setName(
                         user.getName()
                 );
+
 
                 student.setEmail(
                         user.getEmail()
                 );
 
+
                 student.setCollege(
                         emailOtp.getCollege()
                 );
+
 
                 if (emailOtp.getGraduationYear() != null &&
                         !emailOtp.getGraduationYear()
@@ -391,6 +458,7 @@ public class AuthController {
                     );
                 }
 
+
                 if (emailOtp.getCgpa() != null &&
                         !emailOtp.getCgpa()
                                 .trim()
@@ -405,10 +473,12 @@ public class AuthController {
                     );
                 }
 
+
                 student.setUser(user);
 
                 studentRepository.save(student);
             }
+
 
             // ==============================
             // CREATE COMPANY
@@ -421,6 +491,7 @@ public class AuthController {
                 String companyName =
                         emailOtp.getCompanyName();
 
+
                 if (companyName == null ||
                         companyName.trim().isEmpty()) {
 
@@ -431,25 +502,33 @@ public class AuthController {
                             ));
                 }
 
+
                 Company company =
                         new Company();
+
 
                 company.setName(
                         companyName.trim()
                 );
 
+
                 company.setEmail(
                         emailOtp.getEmail()
                 );
+
 
                 company.setUserId(
                         user.getId()
                 );
 
+
                 companyRepository.save(company);
             }
 
-            // SUCCESS
+
+            // ==============================
+            // REGISTRATION SUCCESS
+            // ==============================
 
             return ResponseEntity.ok(
                     Map.of(
@@ -473,6 +552,7 @@ public class AuthController {
                     )
             );
 
+
         } catch (RuntimeException e) {
 
             return ResponseEntity.badRequest()
@@ -482,6 +562,7 @@ public class AuthController {
                     ));
         }
     }
+
 
 
     // ==============================
@@ -500,6 +581,11 @@ public class AuthController {
             String password =
                     request.get("password");
 
+
+            // ==============================
+            // EMAIL VALIDATION
+            // ==============================
+
             if (email == null ||
                     email.trim().isEmpty()) {
 
@@ -509,6 +595,11 @@ public class AuthController {
                                 "Email is required"
                         ));
             }
+
+
+            // ==============================
+            // PASSWORD VALIDATION
+            // ==============================
 
             if (password == null ||
                     password.isEmpty()) {
@@ -520,11 +611,31 @@ public class AuthController {
                         ));
             }
 
+
+            // ==============================
+            // LOGIN
+            // ==============================
+
             User user =
                     authService.login(
                             email.trim(),
                             password
                     );
+
+
+            // ==============================
+            // LOGIN SUCCESS EMAIL
+            // ==============================
+
+            emailService.sendLoginSuccessEmail(
+                    user.getEmail(),
+                    user.getName()
+            );
+
+
+            // ==============================
+            // LOGIN RESPONSE
+            // ==============================
 
             return ResponseEntity.ok(
                     Map.of(
@@ -544,6 +655,7 @@ public class AuthController {
                             user.isVerified()
                     )
             );
+
 
         } catch (RuntimeException e) {
 
