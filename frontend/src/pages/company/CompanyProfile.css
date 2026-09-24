@@ -1,6 +1,5 @@
 /* =========================================================
-   CAMPUSCONNECT
-   COMPANY PROFILE
+   CAMPUSCONNECT - COMPANY PROFILE
    BLACK + WHITE + RED + GLASS
 ========================================================= */
 
@@ -9,19 +8,19 @@
 }
 
 .company-profile-page {
-  min-height: calc(100vh - 80px);
+  min-height: 100vh;
   width: 100%;
-  padding: 40px 50px 60px;
+  padding: 35px 45px 60px;
 
   background:
     radial-gradient(
       circle at 10% 10%,
-      rgba(255, 0, 0, 0.10),
+      rgba(255, 0, 0, 0.15),
       transparent 30%
     ),
     radial-gradient(
-      circle at 90% 80%,
-      rgba(255, 0, 0, 0.07),
+      circle at 90% 25%,
+      rgba(255, 0, 0, 0.08),
       transparent 30%
     ),
     #000;
@@ -36,89 +35,112 @@
 
 .company-profile-header {
   width: 100%;
-  max-width: 1200px;
-  margin: 0 auto 30px;
+  max-width: 1180px;
+  margin: 0 auto 28px;
 
   display: flex;
   align-items: center;
   justify-content: space-between;
+
   gap: 25px;
 }
 
-.company-profile-label {
-  display: inline-block;
+.company-header-content {
+  min-width: 0;
+}
 
-  color: #ff1f1f;
+.company-profile-label {
+  display: block;
+  margin: 0 0 8px;
+
+  color: #ff3030;
 
   font-size: 12px;
   font-weight: 800;
 
   letter-spacing: 2px;
-
-  margin-bottom: 8px;
+  line-height: 1.3;
 }
 
 .company-profile-header h1 {
   margin: 0;
 
-  font-size: 38px;
-  font-weight: 800;
-
   color: #fff;
+
+  font-size: 40px;
+  font-weight: 800;
+  line-height: 1.15;
 }
 
 .company-profile-header p {
-  margin: 8px 0 0;
+  margin: 9px 0 0;
 
-  color: #aaa;
+  color: #999;
 
-  font-size: 15px;
+  font-size: 14px;
+  line-height: 1.6;
 }
 
 
 /* =========================================================
-   DASHBOARD BUTTON
+   BACK DASHBOARD BUTTON
 ========================================================= */
 
 .back-dashboard-btn {
-  border: 1px solid rgba(255, 255, 255, 0.14);
+  flex-shrink: 0;
+
+  min-width: 150px;
+  height: 46px;
+
+  padding: 0 20px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  border: 1px solid rgba(255, 255, 255, 0.13);
+  border-radius: 12px;
 
   background: rgba(255, 255, 255, 0.05);
 
   color: #fff;
-
-  padding: 12px 18px;
-
-  border-radius: 12px;
 
   font-size: 14px;
   font-weight: 700;
 
   cursor: pointer;
 
-  transition: 0.25s ease;
+  backdrop-filter: blur(12px);
 
-  backdrop-filter: blur(15px);
+  transition: 0.25s ease;
 }
 
 .back-dashboard-btn:hover {
-  border-color: #ff1f1f;
+  border-color: rgba(255, 0, 0, 0.45);
 
-  background: rgba(255, 0, 0, 0.12);
+  background: rgba(255, 0, 0, 0.10);
 
   transform: translateY(-2px);
+
+  box-shadow:
+    0 10px 25px rgba(255, 0, 0, 0.12);
 }
 
 
 /* =========================================================
-   PROFILE CARD
+   MAIN PROFILE CARD
 ========================================================= */
 
 .company-profile-card {
   width: 100%;
-  max-width: 1200px;
+  max-width: 1180px;
 
   margin: 0 auto;
+
+  padding: 32px;
+
+  border: 1px solid rgba(255, 255, 255, 0.10);
+  border-radius: 24px;
 
   background:
     linear-gradient(
@@ -127,18 +149,12 @@
       rgba(255, 255, 255, 0.025)
     );
 
-  border: 1px solid rgba(255, 255, 255, 0.12);
-
-  border-radius: 24px;
-
-  overflow: hidden;
-
-  backdrop-filter: blur(20px);
-  -webkit-backdrop-filter: blur(20px);
+  backdrop-filter: blur(18px);
+  -webkit-backdrop-filter: blur(18px);
 
   box-shadow:
     0 25px 70px rgba(0, 0, 0, 0.55),
-    inset 0 1px 0 rgba(255, 255, 255, 0.05);
+    inset 0 1px 0 rgba(255, 255, 255, 0.04);
 }
 
 
@@ -147,22 +163,17 @@
 ========================================================= */
 
 .company-profile-top {
-  display: flex;
+  width: 100%;
 
+  display: flex;
   align-items: center;
 
-  gap: 24px;
+  gap: 25px;
 
-  padding: 35px;
+  padding-bottom: 30px;
 
-  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
-
-  background:
-    linear-gradient(
-      90deg,
-      rgba(255, 0, 0, 0.08),
-      transparent 60%
-    );
+  border-bottom:
+    1px solid rgba(255, 255, 255, 0.08);
 }
 
 
@@ -171,13 +182,12 @@
 ========================================================= */
 
 .company-avatar {
-  width: 90px;
-  height: 90px;
+  width: 100px;
+  height: 100px;
 
   flex-shrink: 0;
 
   display: flex;
-
   align-items: center;
   justify-content: center;
 
@@ -186,14 +196,21 @@
   background:
     linear-gradient(
       145deg,
-      #ff1f1f,
-      #9e0000
+      #ff3434,
+      #a80000
     );
+
+  border:
+    2px solid rgba(255, 255, 255, 0.14);
 
   color: #fff;
 
-  font-size: 36px;
-  font-weight: 900;
+  font-size: 38px;
+  font-weight: 800;
+
+  line-height: 1;
+
+  text-align: center;
 
   box-shadow:
     0 15px 35px rgba(255, 0, 0, 0.25);
@@ -201,130 +218,280 @@
 
 
 /* =========================================================
-   PROFILE MAIN
+   COMPANY MAIN
 ========================================================= */
 
-.company-profile-main h2 {
-  margin: 0 0 7px;
+.company-profile-main {
+  flex: 1;
+  min-width: 0;
 
-  font-size: 28px;
+  display: block;
+}
+
+.company-profile-main h2 {
+  display: block;
+
+  width: auto;
+
+  margin: 0 0 8px;
 
   color: #fff;
+
+  font-size: 30px;
+  font-weight: 800;
+
+  line-height: 1.25;
+
+  white-space: normal;
+
+  word-break: normal;
+
+  overflow-wrap: break-word;
 }
 
 .company-email {
-  margin: 0 0 12px;
+  margin: 0 0 9px;
 
   color: #aaa;
 
   font-size: 14px;
+
+  line-height: 1.5;
+
+  white-space: normal;
+
+  word-break: normal;
+
+  overflow-wrap: break-word;
 }
 
 .company-industry {
-  display: inline-block;
+  display: inline-flex;
+
+  align-items: center;
+  justify-content: center;
+
+  min-height: 30px;
 
   padding: 6px 12px;
 
-  border-radius: 30px;
+  border:
+    1px solid rgba(255, 0, 0, 0.25);
 
-  background: rgba(255, 0, 0, 0.12);
+  border-radius: 999px;
 
-  border: 1px solid rgba(255, 0, 0, 0.25);
+  background:
+    rgba(255, 0, 0, 0.08);
 
-  color: #ff3b3b;
+  color: #ff4444;
 
   font-size: 12px;
   font-weight: 700;
+
+  line-height: 1.2;
 }
 
 
 /* =========================================================
-   INFORMATION
+   COMPANY INFORMATION
 ========================================================= */
 
 .company-information {
-  padding: 35px;
+  width: 100%;
+
+  padding-top: 30px;
 }
 
-.company-information h3,
-.company-description-section h3 {
-  margin: 0 0 22px;
-
-  font-size: 18px;
+.company-information h3 {
+  margin: 0 0 18px;
 
   color: #fff;
+
+  font-size: 20px;
+  font-weight: 800;
+
+  line-height: 1.3;
 }
+
+
+/* =========================================================
+   INFORMATION GRID
+========================================================= */
 
 .company-info-grid {
+  width: 100%;
+
   display: grid;
 
-  grid-template-columns: repeat(2, 1fr);
+  grid-template-columns:
+    repeat(2, minmax(0, 1fr));
 
-  gap: 16px;
+  gap: 18px;
+
+  align-items: stretch;
 }
 
+
+/* =========================================================
+   INFORMATION CARD
+========================================================= */
+
 .company-info-item {
-  min-height: 88px;
+  width: 100%;
+  min-width: 0;
+
+  min-height: 120px;
+
+  padding: 22px;
+
+  border:
+    1px solid rgba(255, 255, 255, 0.10);
+
+  border-radius: 16px;
+
+  background:
+    rgba(255, 255, 255, 0.035);
 
   display: flex;
 
   flex-direction: column;
 
+  align-items: flex-start;
+
   justify-content: center;
 
-  padding: 18px;
+  text-align: left;
 
-  border-radius: 15px;
+  overflow: hidden;
 
-  background: rgba(255, 255, 255, 0.035);
-
-  border: 1px solid rgba(255, 255, 255, 0.08);
-
-  transition: 0.25s ease;
+  transition:
+    background 0.25s ease,
+    border-color 0.25s ease,
+    transform 0.25s ease,
+    box-shadow 0.25s ease;
 }
 
 .company-info-item:hover {
-  border-color: rgba(255, 0, 0, 0.35);
+  background:
+    rgba(255, 0, 0, 0.045);
 
-  background: rgba(255, 0, 0, 0.045);
+  border-color:
+    rgba(255, 0, 0, 0.30);
 
-  transform: translateY(-2px);
+  transform:
+    translateY(-2px);
+
+  box-shadow:
+    0 12px 28px rgba(0, 0, 0, 0.30);
 }
 
-.info-label {
-  margin-bottom: 7px;
 
-  color: #777;
+/* =========================================================
+   INFORMATION LABEL
+========================================================= */
+
+.info-label {
+  width: 100%;
+
+  display: block;
+
+  margin: 0 0 10px;
+
+  padding: 0;
+
+  color: #888;
 
   font-size: 11px;
 
   font-weight: 800;
 
+  letter-spacing: 1.1px;
+
   text-transform: uppercase;
 
-  letter-spacing: 1px;
+  line-height: 1.3;
+
+  text-align: left;
+
+  white-space: normal;
+
+  word-break: normal;
+
+  overflow-wrap: normal;
+
+  text-indent: 0;
+
+  transform: none;
 }
+
+
+/* =========================================================
+   INFORMATION VALUE
+========================================================= */
 
 .info-value {
-  color: #eee;
+  width: 100%;
+  min-width: 0;
+
+  display: block;
+
+  margin: 0;
+  padding: 0;
+
+  color: #f2f2f2;
 
   font-size: 15px;
 
   font-weight: 600;
 
-  word-break: break-word;
+  line-height: 1.5;
+
+  text-align: left;
+
+  white-space: normal;
+
+  word-break: normal;
+
+  overflow-wrap: break-word;
+
+  text-indent: 0;
+
+  transform: none;
 }
 
+
+/* =========================================================
+   WEBSITE
+========================================================= */
+
 .company-website {
-  color: #ff3030;
+  width: 100%;
+  min-width: 0;
+
+  display: block;
+
+  margin: 0;
+  padding: 0;
+
+  color: #ff3d3d;
 
   font-size: 15px;
 
   font-weight: 600;
+
+  line-height: 1.5;
+
+  text-align: left;
 
   text-decoration: none;
 
-  word-break: break-word;
+  white-space: normal;
+
+  overflow-wrap: anywhere;
+
+  word-break: normal;
+
+  transition: color 0.2s ease;
 }
 
 .company-website:hover {
@@ -339,87 +506,448 @@
 ========================================================= */
 
 .company-description-section {
-  padding: 0 35px 35px;
+  width: 100%;
+
+  margin-top: 30px;
+
+  padding-top: 28px;
+
+  border-top:
+    1px solid rgba(255, 255, 255, 0.08);
+}
+
+.company-description-section h3 {
+  margin: 0 0 14px;
+
+  color: #fff;
+
+  font-size: 20px;
+
+  font-weight: 800;
+
+  line-height: 1.3;
 }
 
 .company-description-section p {
+  width: 100%;
+
   margin: 0;
 
-  padding: 20px;
-
-  border-radius: 15px;
-
-  background: rgba(255, 255, 255, 0.035);
-
-  border: 1px solid rgba(255, 255, 255, 0.08);
-
-  color: #bbb;
+  color: #aaa;
 
   font-size: 15px;
 
-  line-height: 1.7;
+  line-height: 1.8;
+
+  white-space: pre-line;
+
+  word-break: normal;
+
+  overflow-wrap: break-word;
+
+  text-align: left;
 }
 
 
 /* =========================================================
-   ACTIONS
+   ACTION BUTTONS
 ========================================================= */
 
 .company-profile-actions {
+  width: 100%;
+
   display: flex;
 
-  gap: 12px;
+  align-items: center;
 
-  padding: 25px 35px 35px;
+  gap: 14px;
 
-  border-top: 1px solid rgba(255, 255, 255, 0.08);
+  margin-top: 30px;
+
+  padding-top: 26px;
+
+  border-top:
+    1px solid rgba(255, 255, 255, 0.08);
 }
 
-.company-edit-btn,
-.company-jobs-btn {
-  padding: 13px 20px;
 
-  border-radius: 12px;
+/* =========================================================
+   EDIT BUTTON
+========================================================= */
+
+.company-edit-btn {
+  min-height: 46px;
+
+  padding: 0 22px;
+
+  border:
+    1px solid #ff3030;
+
+  border-radius: 11px;
+
+  background:
+    #ff2020;
+
+  color: #fff;
 
   font-size: 14px;
 
-  font-weight: 800;
+  font-weight: 700;
 
   cursor: pointer;
 
-  transition: 0.25s ease;
-}
+  box-shadow:
+    0 8px 20px rgba(255, 0, 0, 0.18);
 
-.company-edit-btn {
-  border: 1px solid rgba(255, 0, 0, 0.45);
-
-  background: rgba(255, 0, 0, 0.12);
-
-  color: #ff3b3b;
+  transition:
+    background 0.25s ease,
+    transform 0.25s ease,
+    box-shadow 0.25s ease;
 }
 
 .company-edit-btn:hover {
-  background: #ff1f1f;
+  background:
+    #df0000;
 
-  color: #fff;
+  transform:
+    translateY(-2px);
 
-  transform: translateY(-2px);
+  box-shadow:
+    0 12px 28px rgba(255, 0, 0, 0.28);
 }
 
-.company-jobs-btn {
-  border: 1px solid rgba(255, 255, 255, 0.15);
 
-  background: rgba(255, 255, 255, 0.06);
+/* =========================================================
+   VIEW JOBS BUTTON
+========================================================= */
+
+.company-jobs-btn {
+  min-height: 46px;
+
+  padding: 0 22px;
+
+  border:
+    1px solid rgba(255, 255, 255, 0.14);
+
+  border-radius: 11px;
+
+  background:
+    rgba(255, 255, 255, 0.05);
 
   color: #fff;
+
+  font-size: 14px;
+
+  font-weight: 700;
+
+  cursor: pointer;
+
+  backdrop-filter: blur(10px);
+
+  transition:
+    background 0.25s ease,
+    border-color 0.25s ease,
+    transform 0.25s ease;
 }
 
 .company-jobs-btn:hover {
-  border-color: #ff1f1f;
+  background:
+    rgba(255, 0, 0, 0.08);
 
-  background: rgba(255, 0, 0, 0.10);
+  border-color:
+    rgba(255, 0, 0, 0.40);
 
-  transform: translateY(-2px);
+  transform:
+    translateY(-2px);
+}
+
+
+/* =========================================================
+   EDIT FORM
+========================================================= */
+
+.company-edit-form {
+  width: 100%;
+}
+
+
+/* =========================================================
+   EDIT GRID
+========================================================= */
+
+.company-edit-grid {
+  width: 100%;
+
+  display: grid;
+
+  grid-template-columns:
+    repeat(2, minmax(0, 1fr));
+
+  gap: 18px;
+
+  margin-top: 20px;
+}
+
+
+/* =========================================================
+   FORM GROUP
+========================================================= */
+
+.company-form-group {
+  width: 100%;
+  min-width: 0;
+
+  display: flex;
+
+  flex-direction: column;
+
+  gap: 8px;
+}
+
+.company-form-group label {
+  color: #fff;
+
+  font-size: 13px;
+
+  font-weight: 700;
+
+  letter-spacing: 0.3px;
+}
+
+
+/* =========================================================
+   FORM INPUTS
+========================================================= */
+
+.company-form-group input,
+.company-form-group textarea {
+  width: 100%;
+  min-width: 0;
+
+  border:
+    1px solid rgba(255, 255, 255, 0.14);
+
+  border-radius: 12px;
+
+  background:
+    rgba(255, 255, 255, 0.05);
+
+  color: #fff;
+
+  font-family: inherit;
+
+  font-size: 14px;
+
+  outline: none;
+
+  transition:
+    border-color 0.2s ease,
+    background 0.2s ease,
+    box-shadow 0.2s ease;
+}
+
+.company-form-group input {
+  height: 50px;
+
+  padding: 0 16px;
+}
+
+.company-form-group textarea {
+  min-height: 140px;
+
+  padding: 14px 16px;
+
+  resize: vertical;
+
+  line-height: 1.6;
+}
+
+.company-form-group input::placeholder,
+.company-form-group textarea::placeholder {
+  color:
+    rgba(255, 255, 255, 0.38);
+}
+
+.company-form-group input:focus,
+.company-form-group textarea:focus {
+  border-color:
+    rgba(255, 48, 48, 0.85);
+
+  background:
+    rgba(255, 255, 255, 0.07);
+
+  box-shadow:
+    0 0 0 3px rgba(255, 40, 40, 0.08);
+}
+
+
+/* =========================================================
+   DESCRIPTION INPUT
+========================================================= */
+
+.company-description-input {
+  margin-top: 20px;
+}
+
+
+/* =========================================================
+   SAVE BUTTON
+========================================================= */
+
+.company-save-btn {
+  min-height: 46px;
+
+  padding: 0 24px;
+
+  border:
+    1px solid #ff3030;
+
+  border-radius: 11px;
+
+  background:
+    #ff2020;
+
+  color: #fff;
+
+  font-size: 14px;
+
+  font-weight: 700;
+
+  cursor: pointer;
+
+  box-shadow:
+    0 8px 20px rgba(255, 0, 0, 0.18);
+
+  transition:
+    background 0.25s ease,
+    transform 0.25s ease,
+    box-shadow 0.25s ease;
+}
+
+.company-save-btn:hover {
+  background:
+    #df0000;
+
+  transform:
+    translateY(-2px);
+
+  box-shadow:
+    0 12px 28px rgba(255, 0, 0, 0.28);
+}
+
+.company-save-btn:disabled {
+  opacity: 0.65;
+
+  cursor: not-allowed;
+
+  transform: none;
+
+  box-shadow: none;
+}
+
+
+/* =========================================================
+   CANCEL BUTTON
+========================================================= */
+
+.company-cancel-btn {
+  min-height: 46px;
+
+  padding: 0 24px;
+
+  border:
+    1px solid rgba(255, 255, 255, 0.16);
+
+  border-radius: 11px;
+
+  background:
+    rgba(255, 255, 255, 0.06);
+
+  color: #fff;
+
+  font-size: 14px;
+
+  font-weight: 700;
+
+  cursor: pointer;
+
+  transition:
+    background 0.25s ease,
+    border-color 0.25s ease,
+    transform 0.25s ease;
+}
+
+.company-cancel-btn:hover {
+  background:
+    rgba(255, 255, 255, 0.10);
+
+  border-color:
+    rgba(255, 255, 255, 0.30);
+
+  transform:
+    translateY(-2px);
+}
+
+.company-cancel-btn:disabled {
+  opacity: 0.6;
+
+  cursor: not-allowed;
+
+  transform: none;
+}
+
+
+/* =========================================================
+   SUCCESS MESSAGE
+========================================================= */
+
+.company-profile-success {
+  width: min(1180px, calc(100% - 0px));
+
+  margin: 0 auto 20px;
+
+  padding: 14px 18px;
+
+  border:
+    1px solid rgba(50, 220, 130, 0.30);
+
+  border-radius: 12px;
+
+  background:
+    rgba(50, 220, 130, 0.08);
+
+  color: #72f0a8;
+
+  font-size: 14px;
+
+  font-weight: 600;
+}
+
+
+/* =========================================================
+   INLINE ERROR
+========================================================= */
+
+.company-profile-inline-error {
+  width: min(1180px, calc(100% - 0px));
+
+  margin: 0 auto 20px;
+
+  padding: 14px 18px;
+
+  border:
+    1px solid rgba(255, 60, 60, 0.30);
+
+  border-radius: 12px;
+
+  background:
+    rgba(255, 60, 60, 0.08);
+
+  color: #ff7777;
+
+  font-size: 14px;
+
+  font-weight: 600;
 }
 
 
@@ -428,34 +956,44 @@
 ========================================================= */
 
 .company-profile-loading {
-  min-height: 500px;
+  min-height: 70vh;
 
   display: flex;
 
   flex-direction: column;
 
   align-items: center;
+
   justify-content: center;
 
+  gap: 15px;
+
   color: #aaa;
+
+  font-size: 15px;
+}
+
+.company-profile-loading p {
+  margin: 0;
 }
 
 .loading-spinner {
   width: 45px;
   height: 45px;
 
-  border: 3px solid rgba(255, 255, 255, 0.12);
-
-  border-top-color: #ff1f1f;
-
   border-radius: 50%;
 
-  animation: profileSpin 0.8s linear infinite;
+  border:
+    3px solid rgba(255, 255, 255, 0.12);
 
-  margin-bottom: 15px;
+  border-top-color:
+    #ff2020;
+
+  animation:
+    companyProfileSpin 0.8s linear infinite;
 }
 
-@keyframes profileSpin {
+@keyframes companyProfileSpin {
   to {
     transform: rotate(360deg);
   }
@@ -467,144 +1005,403 @@
 ========================================================= */
 
 .company-profile-error {
+  width: 100%;
   max-width: 600px;
 
-  margin: 100px auto;
+  margin: 80px auto;
 
-  padding: 45px;
+  padding: 35px;
 
-  text-align: center;
+  border:
+    1px solid rgba(255, 0, 0, 0.25);
 
   border-radius: 20px;
 
-  background: rgba(255, 255, 255, 0.04);
+  background:
+    rgba(255, 0, 0, 0.06);
 
-  border: 1px solid rgba(255, 255, 255, 0.10);
+  text-align: center;
 
-  backdrop-filter: blur(15px);
+  box-shadow:
+    0 20px 50px rgba(0, 0, 0, 0.4);
 }
 
 .error-icon {
-  width: 55px;
-  height: 55px;
+  width: 50px;
+  height: 50px;
 
   margin: 0 auto 18px;
 
   display: flex;
 
   align-items: center;
+
   justify-content: center;
 
   border-radius: 50%;
 
-  background: rgba(255, 0, 0, 0.15);
+  background:
+    rgba(255, 0, 0, 0.12);
 
-  border: 1px solid rgba(255, 0, 0, 0.3);
+  border:
+    1px solid rgba(255, 0, 0, 0.30);
 
   color: #ff3030;
 
   font-size: 25px;
-  font-weight: 900;
+
+  font-weight: 800;
 }
 
 .company-profile-error h2 {
   margin: 0 0 10px;
 
   color: #fff;
+
+  font-size: 22px;
 }
 
 .company-profile-error p {
-  margin: 0 0 25px;
+  margin: 0 0 22px;
 
-  color: #999;
+  color: #aaa;
+
+  font-size: 14px;
 
   line-height: 1.6;
 }
 
-.profile-retry-btn {
-  padding: 12px 22px;
 
-  border: none;
+/* =========================================================
+   RETRY BUTTON
+========================================================= */
+
+.profile-retry-btn {
+  min-height: 44px;
+
+  padding: 0 22px;
+
+  border:
+    1px solid #ff3030;
 
   border-radius: 10px;
 
-  background: #ff1f1f;
+  background:
+    #ff2020;
 
   color: #fff;
 
-  font-weight: 800;
+  font-size: 14px;
+
+  font-weight: 700;
 
   cursor: pointer;
 
-  transition: 0.25s ease;
+  transition:
+    background 0.25s ease,
+    transform 0.25s ease;
 }
 
 .profile-retry-btn:hover {
-  background: #d90000;
+  background:
+    #df0000;
 
-  transform: translateY(-2px);
+  transform:
+    translateY(-2px);
 }
 
 
 /* =========================================================
-   RESPONSIVE
+   TABLET
 ========================================================= */
 
-@media (max-width: 768px) {
+@media (max-width: 900px) {
 
   .company-profile-page {
-    padding: 25px 18px 40px;
+    padding: 28px 24px 50px;
+  }
+
+  .company-profile-card {
+    padding: 27px;
+  }
+
+  .company-info-grid {
+    grid-template-columns:
+      repeat(2, minmax(0, 1fr));
+
+    gap: 15px;
+  }
+
+  .company-edit-grid {
+    grid-template-columns:
+      repeat(2, minmax(0, 1fr));
+
+    gap: 15px;
+  }
+
+  .company-info-item {
+    min-height: 115px;
+
+    padding: 20px;
+  }
+
+  .company-avatar {
+    width: 90px;
+    height: 90px;
+
+    font-size: 32px;
+  }
+
+  .company-profile-header h1 {
+    font-size: 34px;
+  }
+}
+
+
+/* =========================================================
+   MOBILE
+========================================================= */
+
+@media (max-width: 650px) {
+
+  .company-profile-page {
+    padding: 22px 16px 40px;
   }
 
   .company-profile-header {
-    align-items: flex-start;
-
     flex-direction: column;
+
+    align-items: stretch;
+
+    gap: 18px;
   }
 
   .company-profile-header h1 {
     font-size: 30px;
   }
 
+  .back-dashboard-btn {
+    width: 100%;
+  }
+
+  .company-profile-card {
+    padding: 22px;
+
+    border-radius: 20px;
+  }
+
   .company-profile-top {
-    padding: 25px;
+    flex-direction: column;
 
     align-items: flex-start;
+
+    gap: 18px;
   }
 
   .company-avatar {
-    width: 70px;
-    height: 70px;
+    width: 82px;
+    height: 82px;
 
     border-radius: 18px;
 
-    font-size: 28px;
+    font-size: 29px;
+  }
+
+  .company-profile-main {
+    width: 100%;
+  }
+
+  .company-profile-main h2 {
+    font-size: 24px;
+
+    white-space: normal;
+
+    word-break: normal;
+
+    overflow-wrap: break-word;
+  }
+
+  /* One information card per row */
+
+  .company-info-grid {
+    grid-template-columns: 1fr;
+
+    gap: 12px;
+  }
+
+  .company-info-item {
+    min-height: 105px;
+
+    padding: 18px;
+  }
+
+  /* One edit field per row */
+
+  .company-edit-grid {
+    grid-template-columns: 1fr;
+
+    gap: 16px;
+  }
+
+  .company-description-input {
+    margin-top: 16px;
+  }
+
+  /* Buttons */
+
+  .company-profile-actions {
+    flex-direction: column;
+
+    align-items: stretch;
+  }
+
+  .company-edit-btn,
+  .company-jobs-btn,
+  .company-save-btn,
+  .company-cancel-btn {
+    width: 100%;
+  }
+
+  .company-profile-success,
+  .company-profile-inline-error {
+    width: 100%;
+  }
+}
+
+
+/* =========================================================
+   SMALL MOBILE
+========================================================= */
+
+@media (max-width: 400px) {
+
+  .company-profile-page {
+    padding: 18px 12px 35px;
+  }
+
+  .company-profile-card {
+    padding: 18px;
+
+    border-radius: 17px;
+  }
+
+  .company-profile-header h1 {
+    font-size: 27px;
+  }
+
+  .company-profile-header p {
+    font-size: 13px;
   }
 
   .company-profile-main h2 {
     font-size: 22px;
   }
 
-  .company-information {
-    padding: 25px;
+  .company-info-item {
+    min-height: 100px;
+
+    padding: 16px;
   }
 
-  .company-info-grid {
-    grid-template-columns: 1fr;
+  .info-label {
+    font-size: 10px;
   }
 
-  .company-description-section {
-    padding: 0 25px 25px;
+  .info-value,
+  .company-website {
+    font-size: 14px;
   }
 
-  .company-profile-actions {
-    padding: 20px 25px 25px;
-
-    flex-direction: column;
+  .company-form-group input {
+    height: 48px;
   }
 
+  .company-form-group textarea {
+    min-height: 125px;
+  }
+}
+
+
+/* =========================================================
+   ALIGNMENT / CLIPPING PROTECTION
+========================================================= */
+
+.company-profile-page *,
+.company-profile-page *::before,
+.company-profile-page *::after {
+  box-sizing: border-box;
+}
+
+.company-profile-page .company-info-grid {
+  overflow: visible;
+}
+
+.company-profile-page .company-info-item {
+  overflow: hidden;
+
+  text-align: left;
+
+  align-items: flex-start;
+}
+
+.company-profile-page .info-label,
+.company-profile-page .info-value,
+.company-profile-page .company-website {
+  position: relative;
+
+  left: auto;
+  right: auto;
+
+  margin-left: 0;
+  margin-right: 0;
+
+  padding-left: 0;
+  padding-right: 0;
+
+  text-indent: 0;
+
+  text-align: left;
+
+  transform: none;
+}
+
+
+/* =========================================================
+   ACCESSIBILITY
+========================================================= */
+
+.back-dashboard-btn:focus-visible,
+.company-edit-btn:focus-visible,
+.company-jobs-btn:focus-visible,
+.company-save-btn:focus-visible,
+.company-cancel-btn:focus-visible,
+.profile-retry-btn:focus-visible,
+.company-website:focus-visible {
+  outline:
+    2px solid #ff3030;
+
+  outline-offset: 3px;
+}
+
+
+/* =========================================================
+   REDUCED MOTION
+========================================================= */
+
+@media (prefers-reduced-motion: reduce) {
+
+  .back-dashboard-btn,
+  .company-info-item,
   .company-edit-btn,
-  .company-jobs-btn {
-    width: 100%;
+  .company-jobs-btn,
+  .company-save-btn,
+  .company-cancel-btn,
+  .profile-retry-btn,
+  .company-website {
+    transition: none;
+  }
+
+  .loading-spinner {
+    animation: none;
   }
 }

@@ -10,10 +10,9 @@ function JobDetails() {
   const [job, setJob] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
-  const [applying, setApplying] = useState(false);
 
   // =========================================================
-  // LOAD JOB FROM BACKEND
+  // LOAD JOB
   // =========================================================
 
   useEffect(() => {
@@ -33,45 +32,21 @@ function JobDetails() {
 
       const data = response.data;
 
-      // Convert backend data to frontend format
       const formattedJob = {
         id: data.id,
-
-        company:
-          data.companyName || "Company",
-
-        title:
-          data.title || "Untitled Job",
-
-        location:
-          data.location || "Not specified",
-
-        mode:
-          data.workMode || "Not specified",
-
-        type:
-          formatJobType(data.jobType),
-
-        duration:
-          data.duration || "Not specified",
-
-        salary:
-          data.salary || "Not specified",
-
-        posted:
-          formatPostedDate(data.createdAt),
-
-        deadline:
-          data.deadline,
-
-        openings:
-          data.openings,
-
-        skills:
-          Array.isArray(data.skills)
-            ? data.skills
-            : [],
-
+        company: data.companyName || "Company",
+        title: data.title || "Untitled Job",
+        location: data.location || "Not specified",
+        mode: data.workMode || "Not specified",
+        type: formatJobType(data.jobType),
+        duration: data.duration || "Not specified",
+        salary: data.salary || "Not specified",
+        posted: formatPostedDate(data.createdAt),
+        deadline: data.deadline,
+        openings: data.openings,
+        skills: Array.isArray(data.skills)
+          ? data.skills
+          : [],
         description:
           data.description ||
           "No job description available.",
@@ -108,9 +83,7 @@ function JobDetails() {
   // =========================================================
 
   const formatJobType = (type) => {
-    if (!type) {
-      return "Other";
-    }
+    if (!type) return "Other";
 
     const value = type.toUpperCase();
 
@@ -145,7 +118,8 @@ function JobDetails() {
       today.getTime() - created.getTime();
 
     const days = Math.floor(
-      difference / (1000 * 60 * 60 * 24)
+      difference /
+        (1000 * 60 * 60 * 24)
     );
 
     if (days <= 0) {
@@ -175,92 +149,58 @@ function JobDetails() {
   // APPLY FOR JOB
   // =========================================================
 
-  const handleApply = async () => {
+  const handleApply = () => {
     if (!job) {
       return;
     }
 
+    // -------------------------------------------------------
+    // CHECK LOGIN
+    // -------------------------------------------------------
+
+    const storedUser =
+      localStorage.getItem("user");
+
+    if (!storedUser) {
+      alert("Please login first.");
+      navigate("/login");
+      return;
+    }
+
+    // -------------------------------------------------------
+    // CHECK USER DATA
+    // -------------------------------------------------------
+
     try {
-      setApplying(true);
+      const user =
+        JSON.parse(storedUser);
 
-      // Get logged-in user
-      const storedUser =
-        localStorage.getItem("user");
-
-      if (!storedUser) {
-        alert("Please login first.");
-        navigate("/login");
-        return;
-      }
-
-      let user;
-
-      try {
-        user = JSON.parse(storedUser);
-      } catch (parseError) {
-        console.error(
-          "Invalid user data:",
-          parseError
-        );
-
+      if (!user?.id) {
         alert(
-          "Your login session is invalid. Please login again."
+          "User ID not found. Please login again."
         );
-
-        localStorage.removeItem("user");
-        navigate("/login");
-
         return;
       }
 
-      const userId = user?.id;
+      // -----------------------------------------------------
+      // OPEN APPLICATION FORM
+      // -----------------------------------------------------
 
-      if (!userId) {
-        alert(
-          "User ID not found. Please logout and login again."
-        );
-
-        return;
-      }
-
-      // Make application request
-      const response = await axios.post(
-        "http://localhost:8081/api/applications",
-        {
-          userId: Number(userId),
-          jobId: Number(id),
-        }
-      );
-
-      console.log(
-        "Application saved:",
-        response.data
-      );
-
-      alert(
-        "Application submitted successfully!"
-      );
+      navigate(`/apply/${job.id}`);
 
     } catch (error) {
       console.error(
-        "Application error:",
+        "Invalid user data:",
         error
       );
 
-      console.error(
-        "Backend response:",
-        error.response?.data
+      localStorage.removeItem("user");
+
+      alert(
+        "Your login session is invalid. Please login again."
       );
 
-      const message =
-        error.response?.data?.error ||
-        error.response?.data?.message ||
-        "Failed to apply for this job.";
-
-      alert(message);
-
-    } finally {
-      setApplying(false);
+      navigate("/login");
     }
   };
 
@@ -272,20 +212,12 @@ function JobDetails() {
     return (
       <div className="job-details-page">
 
-        <div className="job-not-found">
-
-          <div className="not-found-icon">
-            ⏳
-          </div>
-
-          <h1>
-            Loading job...
-          </h1>
+        <div className="job-details-loading">
+          <div className="loading-spinner"></div>
 
           <p>
-            Loading the latest job information.
+            Loading job details...
           </p>
-
         </div>
 
       </div>
@@ -293,30 +225,20 @@ function JobDetails() {
   }
 
   // =========================================================
-  // ERROR / NOT FOUND
+  // ERROR
   // =========================================================
 
   if (error || !job) {
     return (
       <div className="job-details-page">
 
-        <div className="job-not-found">
+        <div className="job-details-error">
 
-          <div className="not-found-icon">
-            !
-          </div>
-
-          <h1>
-            Job not found
-          </h1>
-
-          <p>
-            {error ||
-              "The opportunity you are looking for does not exist."}
-          </p>
+          <h2>
+            {error || "Job not found"}
+          </h2>
 
           <button
-            className="back-jobs-button"
             onClick={() => navigate("/jobs")}
           >
             ← Back to Jobs
@@ -329,7 +251,7 @@ function JobDetails() {
   }
 
   // =========================================================
-  // RETURN
+  // MAIN UI
   // =========================================================
 
   return (
@@ -337,207 +259,123 @@ function JobDetails() {
 
       <div className="job-details-container">
 
-        {/* ===================================================
+        {/* =================================================
             BACK BUTTON
-        =================================================== */}
+        ================================================= */}
 
         <button
-          className="back-button"
+          className="back-to-jobs"
           onClick={() => navigate("/jobs")}
         >
           ← Back to Jobs
         </button>
 
-        {/* ===================================================
+        {/* =================================================
             JOB HEADER
-        =================================================== */}
+        ================================================= */}
 
-        <section className="job-details-header">
+        <div className="job-details-header">
 
-          <div className="job-details-company-logo">
-            {job.company
-              .charAt(0)
-              .toUpperCase()}
-          </div>
+          <div className="job-header-left">
 
-          <div className="job-details-title-area">
+            <div className="company-logo-large">
+              {job.company
+                ?.charAt(0)
+                ?.toUpperCase() || "C"}
+            </div>
 
-            <span className="job-details-type">
-              {job.type}
-            </span>
+            <div className="job-header-info">
 
-            <h1>
-              {job.title}
-            </h1>
-
-            <h3>
-              {job.company}
-            </h3>
-
-            <div className="job-details-meta">
-
-              <span>
-                📍 {job.location}
+              <span className="job-company">
+                {job.company}
               </span>
 
-              <span>
-                🏢 {job.mode}
-              </span>
+              <h1>
+                {job.title}
+              </h1>
 
-              <span>
-                ⏱️ {job.duration}
-              </span>
+              <div className="job-header-meta">
 
-              <span>
-                🕒 {job.posted}
-              </span>
+                <span>
+                  📍 {job.location}
+                </span>
+
+                <span>
+                  💼 {job.type}
+                </span>
+
+                <span>
+                  🏢 {job.mode}
+                </span>
+
+              </div>
 
             </div>
 
           </div>
 
-          <div className="job-details-header-action">
-
-            <div className="job-details-salary">
-              {job.salary}
-            </div>
+          <div className="job-header-action">
 
             <button
               className="apply-button"
               onClick={handleApply}
-              disabled={applying}
             >
-              {applying
-                ? "Applying..."
-                : "Apply Now →"}
+              Apply Now →
             </button>
 
           </div>
 
-        </section>
+        </div>
 
-        {/* ===================================================
-            MAIN GRID
-        =================================================== */}
+        {/* =================================================
+            MAIN CONTENT
+        ================================================= */}
 
-        <div className="job-details-grid">
+        <div className="job-details-layout">
 
           {/* =================================================
               LEFT CONTENT
           ================================================= */}
 
-          <main className="job-details-main">
+          <div className="job-details-main">
 
             {/* DESCRIPTION */}
 
-            <section className="details-section">
+            <section className="job-section">
 
               <h2>
-                About the opportunity
+                About the Job
               </h2>
 
-              <p>
+              <p className="job-description">
                 {job.description}
               </p>
-
-            </section>
-
-            {/* JOB DESCRIPTION */}
-
-            <section className="details-section">
-
-              <h2>
-                Job description
-              </h2>
-
-              <p>
-                {job.description}
-              </p>
-
-            </section>
-
-            {/* RESPONSIBILITIES */}
-
-            <section className="details-section">
-
-              <h2>
-                Responsibilities
-              </h2>
-
-              <ul>
-
-                <li>
-                  Work on assigned projects and tasks
-                </li>
-
-                <li>
-                  Collaborate with team members
-                </li>
-
-                <li>
-                  Write clean and maintainable code
-                </li>
-
-                <li>
-                  Participate in development activities
-                </li>
-
-                <li>
-                  Test and improve applications
-                </li>
-
-              </ul>
-
-            </section>
-
-            {/* REQUIREMENTS */}
-
-            <section className="details-section">
-
-              <h2>
-                Requirements
-              </h2>
-
-              <ul>
-
-                <li>
-                  Basic knowledge of programming
-                </li>
-
-                <li>
-                  Good problem-solving skills
-                </li>
-
-                <li>
-                  Ability to work in a team
-                </li>
-
-                <li>
-                  Interest in learning new technologies
-                </li>
-
-              </ul>
 
             </section>
 
             {/* SKILLS */}
 
-            <section className="details-section">
+            <section className="job-section">
 
               <h2>
-                Required skills
+                Required Skills
               </h2>
 
-              {job.skills.length > 0 ? (
+              {job.skills &&
+              job.skills.length > 0 ? (
 
-                <div className="details-skills">
+                <div className="skills-container">
 
                   {job.skills.map(
                     (skill, index) => (
                       <span
-                        key={`${skill}-${index}`}
+                        key={index}
+                        className="skill-tag"
                       >
-                        {skill}
+                        {typeof skill ===
+                        "string"
+                          ? skill
+                          : skill.name}
                       </span>
                     )
                   )}
@@ -546,43 +384,29 @@ function JobDetails() {
 
               ) : (
 
-                <p>
-                  No specific skills listed.
+                <p className="no-data">
+                  No specific skills mentioned.
                 </p>
 
               )}
 
             </section>
 
-          </main>
+            {/* ADDITIONAL DETAILS */}
 
-          {/* =================================================
-              RIGHT SIDEBAR
-          ================================================= */}
-
-          <aside className="job-details-sidebar">
-
-            {/* JOB OVERVIEW */}
-
-            <div className="sidebar-card">
+            <section className="job-section">
 
               <h2>
-                Job overview
+                Job Details
               </h2>
 
-              {/* JOB TYPE */}
+              <div className="job-info-grid">
 
-              <div className="overview-item">
+                <div className="job-info-item">
 
-                <span className="overview-icon">
-                  💼
-                </span>
-
-                <div>
-
-                  <small>
-                    Job type
-                  </small>
+                  <span className="info-label">
+                    Job Type
+                  </span>
 
                   <strong>
                     {job.type}
@@ -590,43 +414,11 @@ function JobDetails() {
 
                 </div>
 
-              </div>
+                <div className="job-info-item">
 
-              {/* LOCATION */}
-
-              <div className="overview-item">
-
-                <span className="overview-icon">
-                  📍
-                </span>
-
-                <div>
-
-                  <small>
-                    Location
-                  </small>
-
-                  <strong>
-                    {job.location}
-                  </strong>
-
-                </div>
-
-              </div>
-
-              {/* WORK MODE */}
-
-              <div className="overview-item">
-
-                <span className="overview-icon">
-                  🏢
-                </span>
-
-                <div>
-
-                  <small>
-                    Work mode
-                  </small>
+                  <span className="info-label">
+                    Work Mode
+                  </span>
 
                   <strong>
                     {job.mode}
@@ -634,21 +426,11 @@ function JobDetails() {
 
                 </div>
 
-              </div>
+                <div className="job-info-item">
 
-              {/* DURATION */}
-
-              <div className="overview-item">
-
-                <span className="overview-icon">
-                  ⏱️
-                </span>
-
-                <div>
-
-                  <small>
+                  <span className="info-label">
                     Duration
-                  </small>
+                  </span>
 
                   <strong>
                     {job.duration}
@@ -656,21 +438,11 @@ function JobDetails() {
 
                 </div>
 
-              </div>
+                <div className="job-info-item">
 
-              {/* SALARY */}
-
-              <div className="overview-item">
-
-                <span className="overview-icon">
-                  💰
-                </span>
-
-                <div>
-
-                  <small>
-                    Salary / Stipend
-                  </small>
+                  <span className="info-label">
+                    Salary
+                  </span>
 
                   <strong>
                     {job.salary}
@@ -680,91 +452,175 @@ function JobDetails() {
 
               </div>
 
-              {/* OPENINGS */}
+            </section>
 
-              <div className="overview-item">
+          </div>
 
-                <span className="overview-icon">
-                  👥
+          {/* =================================================
+              RIGHT SIDEBAR
+          ================================================= */}
+
+          <aside className="job-details-sidebar">
+
+            <div className="job-sidebar-card">
+
+              <h3>
+                Opportunity Details
+              </h3>
+
+              {/* LOCATION */}
+
+              <div className="sidebar-detail">
+
+                <span className="sidebar-icon">
+                  📍
                 </span>
 
                 <div>
-
                   <small>
-                    Openings
+                    Location
                   </small>
 
                   <strong>
-                    {job.openings ||
-                      "Not specified"}
+                    {job.location}
                   </strong>
-
                 </div>
 
               </div>
+
+              {/* WORK MODE */}
+
+              <div className="sidebar-detail">
+
+                <span className="sidebar-icon">
+                  🏢
+                </span>
+
+                <div>
+                  <small>
+                    Work Mode
+                  </small>
+
+                  <strong>
+                    {job.mode}
+                  </strong>
+                </div>
+
+              </div>
+
+              {/* DURATION */}
+
+              <div className="sidebar-detail">
+
+                <span className="sidebar-icon">
+                  ⏱
+                </span>
+
+                <div>
+                  <small>
+                    Duration
+                  </small>
+
+                  <strong>
+                    {job.duration}
+                  </strong>
+                </div>
+
+              </div>
+
+              {/* SALARY */}
+
+              <div className="sidebar-detail">
+
+                <span className="sidebar-icon">
+                  ₹
+                </span>
+
+                <div>
+                  <small>
+                    Salary / Stipend
+                  </small>
+
+                  <strong>
+                    {job.salary}
+                  </strong>
+                </div>
+
+              </div>
+
+              {/* OPENINGS */}
+
+              {job.openings && (
+                <div className="sidebar-detail">
+
+                  <span className="sidebar-icon">
+                    👥
+                  </span>
+
+                  <div>
+                    <small>
+                      Openings
+                    </small>
+
+                    <strong>
+                      {job.openings}
+                    </strong>
+                  </div>
+
+                </div>
+              )}
 
               {/* DEADLINE */}
 
-              <div className="overview-item">
+              {job.deadline && (
+                <div className="sidebar-detail">
 
-                <span className="overview-icon">
-                  📅
+                  <span className="sidebar-icon">
+                    📅
+                  </span>
+
+                  <div>
+                    <small>
+                      Application Deadline
+                    </small>
+
+                    <strong>
+                      {new Date(
+                        job.deadline
+                      ).toLocaleDateString()}
+                    </strong>
+                  </div>
+
+                </div>
+              )}
+
+              {/* POSTED */}
+
+              <div className="sidebar-detail">
+
+                <span className="sidebar-icon">
+                  🕒
                 </span>
 
                 <div>
-
                   <small>
-                    Application deadline
+                    Posted
                   </small>
 
                   <strong>
-                    {job.deadline ||
-                      "Not specified"}
+                    {job.posted}
                   </strong>
-
                 </div>
 
               </div>
 
-              {/* APPLY */}
+              {/* SIDEBAR APPLY */}
 
               <button
                 className="sidebar-apply-button"
                 onClick={handleApply}
-                disabled={applying}
               >
-                {applying
-                  ? "Applying..."
-                  : "Apply Now →"}
-              </button>
-
-            </div>
-
-            {/* =================================================
-                COMPANY CARD
-            ================================================= */}
-
-            <div className="company-details-card">
-
-              <div className="company-details-logo">
-                {job.company
-                  .charAt(0)
-                  .toUpperCase()}
-              </div>
-
-              <h2>
-                {job.company}
-              </h2>
-
-              <p>
-                Company offering career opportunities
-                for students and fresh graduates.
-              </p>
-
-              <button
-                type="button"
-              >
-                View Company →
+                Apply Now →
               </button>
 
             </div>

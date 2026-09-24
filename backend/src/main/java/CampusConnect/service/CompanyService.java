@@ -2,7 +2,6 @@ package CampusConnect.service;
 
 import CampusConnect.entity.Company;
 import CampusConnect.repository.CompanyRepository;
-
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -16,21 +15,11 @@ public class CompanyService {
         this.companyRepository = companyRepository;
     }
 
-    // =========================================================
-    // GET ALL COMPANIES
-    // =========================================================
-
     public List<Company> getAllCompanies() {
-
         return companyRepository.findAll();
     }
 
-    // =========================================================
-    // GET COMPANY BY ID
-    // =========================================================
-
     public Company getCompanyById(Long id) {
-
         return companyRepository.findById(id)
                 .orElseThrow(() ->
                         new RuntimeException(
@@ -39,20 +28,7 @@ public class CompanyService {
                 );
     }
 
-    // =========================================================
-    // GET COMPANY BY USER ID
-    // =========================================================
-    //
-    // User ID
-    //    ↓
-    // company.user_id
-    //    ↓
-    // Company
-    //
-    // =========================================================
-
     public Company getCompanyByUserId(Long userId) {
-
         return companyRepository.findByUserId(userId)
                 .orElseThrow(() ->
                         new RuntimeException(
@@ -61,13 +37,27 @@ public class CompanyService {
                 );
     }
 
-    // =========================================================
-    // SEARCH COMPANIES
-    // =========================================================
-
     public List<Company> searchCompanies(String keyword) {
+        return companyRepository.findByNameContainingIgnoreCase(keyword);
+    }
 
-        return companyRepository
-                .findByNameContainingIgnoreCase(keyword);
+    // UPDATE COMPANY
+    public Company updateCompany(Long id, Company updatedCompany) {
+
+        Company existingCompany = companyRepository.findById(id)
+                .orElseThrow(() ->
+                        new RuntimeException(
+                                "Company not found with id: " + id
+                        )
+                );
+
+        existingCompany.setName(updatedCompany.getName());
+        existingCompany.setDescription(updatedCompany.getDescription());
+        existingCompany.setEmail(updatedCompany.getEmail());
+        existingCompany.setIndustry(updatedCompany.getIndustry());
+        existingCompany.setLocation(updatedCompany.getLocation());
+        existingCompany.setWebsite(updatedCompany.getWebsite());
+
+        return companyRepository.save(existingCompany);
     }
 }

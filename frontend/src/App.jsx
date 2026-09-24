@@ -22,6 +22,7 @@ import Login from "./pages/Login";
 import Register from "./pages/Register";
 import Jobs from "./pages/Jobs";
 import JobDetails from "./pages/JobDetails";
+import ApplicationForm from "./pages/ApplicationForm";
 import Applications from "./pages/Applications";
 import Companies from "./pages/Companies";
 import CompanyDetails from "./pages/CompanyDetails";
@@ -35,8 +36,6 @@ import CompanyDashboard from "./pages/company/CompanyDashboard";
 import CompanyProfile from "./pages/company/CompanyProfile";
 import MyJobs from "./pages/company/MyJobs";
 import PostJob from "./pages/company/PostJob";
-
-// This will be created next
 import CompanyApplications from "./pages/company/CompanyApplications";
 
 // =========================================================
@@ -92,7 +91,6 @@ function App() {
           element={<Register />}
         />
 
-
         {/* =================================================
             PROTECTED ROUTES
         ================================================= */}
@@ -115,6 +113,15 @@ function App() {
               element={<JobDetails />}
             />
 
+            {/* =================================================
+                NEW APPLICATION FORM
+            ================================================= */}
+
+            <Route
+              path="/apply/:jobId"
+              element={<ApplicationForm />}
+            />
+
             <Route
               path="/applications"
               element={<Applications />}
@@ -134,7 +141,6 @@ function App() {
               path="/profile"
               element={<Profile />}
             />
-
 
             {/* =================================================
                 COMPANY ROUTES
@@ -168,7 +174,6 @@ function App() {
           </Route>
 
         </Route>
-
 
         {/* =================================================
             UNKNOWN URL

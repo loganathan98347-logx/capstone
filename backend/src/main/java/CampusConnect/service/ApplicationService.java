@@ -10,7 +10,9 @@ import CampusConnect.repository.ApplicationRepository;
 import CampusConnect.repository.CompanyRepository;
 import CampusConnect.repository.JobRepository;
 import CampusConnect.repository.StudentRepository;
+
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.time.LocalDateTime;
 import java.util.List;
@@ -36,7 +38,7 @@ public class ApplicationService {
     }
 
     // =========================================================
-    // APPLY FOR JOB
+    // OLD APPLY FOR JOB
     // =========================================================
 
     public Application applyForJob(Long userId, Long jobId) {
@@ -77,10 +79,244 @@ public class ApplicationService {
     }
 
     // =========================================================
+    // NEW APPLICATION FORM SUBMISSION
+    // =========================================================
+
+    public Application submitApplication(
+            Long userId,
+            Long jobId,
+            String fullName,
+            String phoneNumber,
+            String email,
+            String candidateType,
+            String experienceYears,
+            String projects,
+            String degree,
+            String department,
+            String address,
+            String country,
+            String state,
+            String district,
+            String town,
+            MultipartFile resume
+    ) {
+
+        // -----------------------------------------------------
+        // FIND STUDENT
+        // -----------------------------------------------------
+
+        Student student = studentRepository.findByUserId(userId);
+
+        if (student == null) {
+            throw new RuntimeException(
+                    "Student profile not found for this user"
+            );
+        }
+
+        // -----------------------------------------------------
+        // FIND JOB
+        // -----------------------------------------------------
+
+        Job job = jobRepository.findById(jobId)
+                .orElseThrow(() ->
+                        new RuntimeException("Job not found")
+                );
+
+        // -----------------------------------------------------
+        // DUPLICATE CHECK
+        // -----------------------------------------------------
+
+        boolean alreadyApplied =
+                applicationRepository.existsByStudent_IdAndJob_Id(
+                        student.getId(),
+                        job.getId()
+                );
+
+        if (alreadyApplied) {
+            throw new RuntimeException(
+                    "You have already applied for this job"
+            );
+        }
+
+        // -----------------------------------------------------
+        // VALIDATE RESUME
+        // -----------------------------------------------------
+
+        if (resume == null || resume.isEmpty()) {
+            throw new RuntimeException(
+                    "Resume is required"
+            );
+        }
+
+        String fileName = resume.getOriginalFilename();
+
+        if (fileName == null || fileName.trim().isEmpty()) {
+            throw new RuntimeException(
+                    "Invalid resume file"
+            );
+        }
+
+        String lowerName = fileName.toLowerCase();
+
+        if (!lowerName.endsWith(".pdf")
+                && !lowerName.endsWith(".doc")
+                && !lowerName.endsWith(".docx")) {
+
+            throw new RuntimeException(
+                    "Resume must be PDF, DOC or DOCX"
+            );
+        }
+
+        // -----------------------------------------------------
+        // VALIDATE CANDIDATE TYPE
+        // -----------------------------------------------------
+
+        if (candidateType == null
+                || candidateType.trim().isEmpty()) {
+
+            throw new RuntimeException(
+                    "Please select Fresher or Experienced"
+            );
+        }
+
+        String normalizedType =
+                candidateType.trim().toUpperCase();
+
+        if (!normalizedType.equals("FRESHER")
+                && !normalizedType.equals("EXPERIENCED")) {
+
+            throw new RuntimeException(
+                    "Invalid candidate type"
+            );
+        }
+
+        // -----------------------------------------------------
+        // EXPERIENCED VALIDATION
+        // -----------------------------------------------------
+
+        Double parsedExperience = null;
+
+        if (normalizedType.equals("EXPERIENCED")) {
+
+            if (experienceYears == null
+                    || experienceYears.trim().isEmpty()) {
+
+                throw new RuntimeException(
+                        "Please enter years of experience"
+                );
+            }
+
+            try {
+
+                parsedExperience =
+                        Double.parseDouble(
+                                experienceYears
+                        );
+
+                if (parsedExperience < 0) {
+                    throw new RuntimeException(
+                            "Experience cannot be negative"
+                    );
+                }
+
+            } catch (NumberFormatException e) {
+
+                throw new RuntimeException(
+                        "Invalid years of experience"
+                );
+            }
+
+        }
+
+        // -----------------------------------------------------
+        // FRESHER VALIDATION
+        // -----------------------------------------------------
+
+        if (normalizedType.equals("FRESHER")) {
+
+            if (projects == null
+                    || projects.trim().isEmpty()) {
+
+                throw new RuntimeException(
+                        "Please mention your projects"
+                );
+            }
+        }
+
+        // -----------------------------------------------------
+        // CREATE APPLICATION
+        // -----------------------------------------------------
+
+        Application application = new Application();
+
+        application.setStudent(student);
+        application.setJob(job);
+
+        application.setStatus("APPLIED");
+        application.setAppliedAt(LocalDateTime.now());
+
+        application.setFullName(fullName);
+        application.setPhoneNumber(phoneNumber);
+        application.setEmail(email);
+
+        application.setCandidateType(
+                normalizedType
+        );
+
+        application.setExperienceYears(
+                parsedExperience
+        );
+
+        application.setProjects(projects);
+
+        application.setDegree(degree);
+        application.setDepartment(department);
+        application.setAddress(address);
+
+        application.setCountry(country);
+        application.setState(state);
+        application.setDistrict(district);
+        application.setTown(town);
+
+        // -----------------------------------------------------
+        // SAVE RESUME
+        // -----------------------------------------------------
+
+        try {
+
+            application.setResumeFileName(
+                    fileName
+            );
+
+            application.setResumeContentType(
+                    resume.getContentType()
+            );
+
+            application.setResumeData(
+                    resume.getBytes()
+            );
+
+        } catch (Exception e) {
+
+            throw new RuntimeException(
+                    "Failed to save resume"
+            );
+        }
+
+        // -----------------------------------------------------
+        // SAVE APPLICATION
+        // -----------------------------------------------------
+
+        return applicationRepository.save(application);
+    }
+
+    // =========================================================
     // GET STUDENT APPLICATIONS
     // =========================================================
 
-    public List<ApplicationResponse> getStudentApplications(Long userId) {
+    public List<ApplicationResponse> getStudentApplications(
+            Long userId
+    ) {
 
         Student student = studentRepository.findByUserId(userId);
 
@@ -91,7 +327,9 @@ public class ApplicationService {
         }
 
         List<Application> applications =
-                applicationRepository.findByStudent_Id(student.getId());
+                applicationRepository.findByStudent_Id(
+                        student.getId()
+                );
 
         return applications.stream()
                 .map(this::convertToResponse)
@@ -116,6 +354,7 @@ public class ApplicationService {
         );
 
         if (application.getAppliedAt() != null) {
+
             response.setAppliedAt(
                     application.getAppliedAt().toString()
             );
@@ -177,6 +416,7 @@ public class ApplicationService {
                 response.setCompany(
                         company.getName()
                 );
+
             } else {
 
                 response.setCompany(
@@ -198,7 +438,9 @@ public class ApplicationService {
                                 .filter(name -> name != null)
                                 .toList();
 
-                response.setSkills(skillNames);
+                response.setSkills(
+                        skillNames
+                );
 
             } else {
 
@@ -235,7 +477,9 @@ public class ApplicationService {
     // GET APPLICATIONS FOR A JOB
     // =========================================================
 
-    public List<Application> getJobApplications(Long jobId) {
+    public List<Application> getJobApplications(
+            Long jobId
+    ) {
 
         Job job = jobRepository.findById(jobId)
                 .orElseThrow(() ->
@@ -253,7 +497,9 @@ public class ApplicationService {
     // GET COMPANY APPLICATIONS
     // =========================================================
 
-    public List<Application> getCompanyApplications(Long userId) {
+    public List<Application> getCompanyApplications(
+            Long userId
+    ) {
 
         Company company =
                 companyRepository.findByUserId(userId)
@@ -294,7 +540,8 @@ public class ApplicationService {
                                 )
                         );
 
-        if (status == null || status.trim().isEmpty()) {
+        if (status == null
+                || status.trim().isEmpty()) {
 
             throw new RuntimeException(
                     "Application status is required"

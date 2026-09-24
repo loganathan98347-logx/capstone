@@ -1,9 +1,30 @@
+
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 
 function PostJob() {
   const navigate = useNavigate();
+
+  // =========================================================
+  // GET TODAY'S DATE
+  // =========================================================
+
+  const getTodayDate = () => {
+    const today = new Date();
+
+    const year = today.getFullYear();
+    const month = String(today.getMonth() + 1).padStart(2, "0");
+    const day = String(today.getDate()).padStart(2, "0");
+
+    return `${year}-${month}-${day}`;
+  };
+
+  const today = getTodayDate();
+
+  // =========================================================
+  // FORM DATA
+  // =========================================================
 
   const [formData, setFormData] = useState({
     title: "",
@@ -38,10 +59,27 @@ function PostJob() {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
+    // =======================================================
+    // VALIDATE APPLICATION DEADLINE
+    // =======================================================
+
+    if (!formData.deadline) {
+      alert("Please select an application deadline.");
+      return;
+    }
+
+    if (formData.deadline < today) {
+      alert("Application deadline cannot be a previous date.");
+      return;
+    }
+
     try {
       setLoading(true);
 
-      // Get logged-in user
+      // =====================================================
+      // GET LOGGED-IN USER
+      // =====================================================
+
       const storedUser = localStorage.getItem("user");
 
       if (!storedUser) {
@@ -54,8 +92,7 @@ function PostJob() {
 
       console.log("Logged-in user:", user);
 
-      // IMPORTANT:
-      // Backend now expects USER ID
+      // Backend expects USER ID
       const userId = user?.id;
 
       if (!userId) {
@@ -71,11 +108,17 @@ function PostJob() {
 
       const requestData = {
         title: formData.title.trim(),
+
         description: formData.description.trim(),
+
         location: formData.location.trim(),
+
         jobType: formData.jobType,
+
         salary: formData.salary.trim(),
+
         deadline: formData.deadline || null,
+
         openings: Number(formData.openings),
 
         skills: formData.skills
@@ -100,7 +143,10 @@ function PostJob() {
 
       alert("Job posted successfully!");
 
-      // Go to company jobs
+      // =====================================================
+      // GO TO COMPANY JOBS
+      // =====================================================
+
       navigate("/company/jobs");
 
     } catch (error) {
@@ -174,7 +220,9 @@ function PostJob() {
           onSubmit={handleSubmit}
         >
 
-          {/* JOB TITLE */}
+          {/* =================================================
+              JOB TITLE
+          ================================================= */}
 
           <div className="form-group">
 
@@ -193,7 +241,9 @@ function PostJob() {
 
           </div>
 
-          {/* JOB TYPE + OPENINGS */}
+          {/* =================================================
+              JOB TYPE + OPENINGS
+          ================================================= */}
 
           <div className="form-row">
 
@@ -244,7 +294,9 @@ function PostJob() {
 
           </div>
 
-          {/* LOCATION */}
+          {/* =================================================
+              LOCATION
+          ================================================= */}
 
           <div className="form-group">
 
@@ -263,7 +315,9 @@ function PostJob() {
 
           </div>
 
-          {/* SALARY */}
+          {/* =================================================
+              SALARY
+          ================================================= */}
 
           <div className="form-group">
 
@@ -281,7 +335,9 @@ function PostJob() {
 
           </div>
 
-          {/* DEADLINE */}
+          {/* =================================================
+              APPLICATION DEADLINE
+          ================================================= */}
 
           <div className="form-group">
 
@@ -294,12 +350,19 @@ function PostJob() {
               name="deadline"
               value={formData.deadline}
               onChange={handleChange}
+              min={today}
               required
             />
 
+            <small>
+              You can select today or a future date only.
+            </small>
+
           </div>
 
-          {/* SKILLS */}
+          {/* =================================================
+              REQUIRED SKILLS
+          ================================================= */}
 
           <div className="form-group">
 
@@ -321,7 +384,9 @@ function PostJob() {
 
           </div>
 
-          {/* DESCRIPTION */}
+          {/* =================================================
+              DESCRIPTION
+          ================================================= */}
 
           <div className="form-group">
 
@@ -340,7 +405,9 @@ function PostJob() {
 
           </div>
 
-          {/* BUTTONS */}
+          {/* =================================================
+              BUTTONS
+          ================================================= */}
 
           <div className="form-actions">
 

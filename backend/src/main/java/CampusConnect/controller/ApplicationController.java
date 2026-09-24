@@ -4,8 +4,10 @@ import CampusConnect.dto.ApplicationResponse;
 import CampusConnect.entity.Application;
 import CampusConnect.service.ApplicationService;
 
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
 import java.util.Map;
@@ -24,7 +26,7 @@ public class ApplicationController {
     }
 
     // =========================================================
-    // STUDENT APPLY FOR JOB
+    // OLD APPLY API
     // =========================================================
 
     @PostMapping
@@ -39,14 +41,11 @@ public class ApplicationController {
 
             if (userId == null || jobId == null) {
 
-                return ResponseEntity
-                        .badRequest()
-                        .body(
-                                Map.of(
-                                        "error",
-                                        "userId and jobId are required"
-                                )
-                        );
+                return ResponseEntity.badRequest()
+                        .body(Map.of(
+                                "error",
+                                "userId and jobId are required"
+                        ));
             }
 
             Application application =
@@ -59,29 +58,103 @@ public class ApplicationController {
 
         } catch (RuntimeException e) {
 
-            return ResponseEntity
-                    .badRequest()
-                    .body(
-                            Map.of(
-                                    "error",
-                                    e.getMessage()
-                            )
-                    );
+            return ResponseEntity.badRequest()
+                    .body(Map.of(
+                            "error",
+                            e.getMessage()
+                    ));
         }
     }
 
     // =========================================================
-    // GET ALL APPLICATIONS FOR ONE STUDENT
+    // NEW APPLICATION FORM SUBMISSION
     // =========================================================
-    //
-    // React calls:
-    //
-    // GET /api/applications/student/{userId}
-    //
-    // Example:
-    //
-    // GET /api/applications/student/5
-    //
+
+    @PostMapping(
+            value = "/submit",
+            consumes = MediaType.MULTIPART_FORM_DATA_VALUE
+    )
+    public ResponseEntity<?> submitApplication(
+
+            @RequestParam Long userId,
+
+            @RequestParam Long jobId,
+
+            @RequestParam String fullName,
+
+            @RequestParam String phoneNumber,
+
+            @RequestParam String email,
+
+            @RequestParam String candidateType,
+
+            @RequestParam(required = false)
+            String experienceYears,
+
+            @RequestParam(required = false)
+            String projects,
+
+            @RequestParam String degree,
+
+            @RequestParam String department,
+
+            @RequestParam String address,
+
+            @RequestParam String country,
+
+            @RequestParam String state,
+
+            @RequestParam String district,
+
+            @RequestParam String town,
+
+            @RequestPart("resume")
+            MultipartFile resume
+    ) {
+
+        try {
+
+            Application application =
+                    applicationService.submitApplication(
+
+                            userId,
+                            jobId,
+
+                            fullName,
+                            phoneNumber,
+                            email,
+
+                            candidateType,
+                            experienceYears,
+                            projects,
+
+                            degree,
+                            department,
+
+                            address,
+
+                            country,
+                            state,
+                            district,
+                            town,
+
+                            resume
+                    );
+
+            return ResponseEntity.ok(application);
+
+        } catch (RuntimeException e) {
+
+            return ResponseEntity.badRequest()
+                    .body(Map.of(
+                            "error",
+                            e.getMessage()
+                    ));
+        }
+    }
+
+    // =========================================================
+    // GET STUDENT APPLICATIONS
     // =========================================================
 
     @GetMapping("/student/{userId}")
@@ -92,26 +165,24 @@ public class ApplicationController {
         try {
 
             List<ApplicationResponse> applications =
-                    applicationService
-                            .getStudentApplications(userId);
+                    applicationService.getStudentApplications(
+                            userId
+                    );
 
             return ResponseEntity.ok(applications);
 
         } catch (RuntimeException e) {
 
-            return ResponseEntity
-                    .badRequest()
-                    .body(
-                            Map.of(
-                                    "error",
-                                    e.getMessage()
-                            )
-                    );
+            return ResponseEntity.badRequest()
+                    .body(Map.of(
+                            "error",
+                            e.getMessage()
+                    ));
         }
     }
 
     // =========================================================
-    // GET APPLICATIONS FOR ONE JOB
+    // GET JOB APPLICATIONS
     // =========================================================
 
     @GetMapping("/job/{jobId}")
@@ -122,26 +193,24 @@ public class ApplicationController {
         try {
 
             List<Application> applications =
-                    applicationService
-                            .getJobApplications(jobId);
+                    applicationService.getJobApplications(
+                            jobId
+                    );
 
             return ResponseEntity.ok(applications);
 
         } catch (RuntimeException e) {
 
-            return ResponseEntity
-                    .badRequest()
-                    .body(
-                            Map.of(
-                                    "error",
-                                    e.getMessage()
-                            )
-                    );
+            return ResponseEntity.badRequest()
+                    .body(Map.of(
+                            "error",
+                            e.getMessage()
+                    ));
         }
     }
 
     // =========================================================
-    // GET ALL APPLICATIONS FOR COMPANY
+    // GET COMPANY APPLICATIONS
     // =========================================================
 
     @GetMapping("/company")
@@ -152,31 +221,31 @@ public class ApplicationController {
         try {
 
             List<Application> applications =
-                    applicationService
-                            .getCompanyApplications(userId);
+                    applicationService.getCompanyApplications(
+                            userId
+                    );
 
             return ResponseEntity.ok(applications);
 
         } catch (RuntimeException e) {
 
-            return ResponseEntity
-                    .badRequest()
-                    .body(
-                            Map.of(
-                                    "error",
-                                    e.getMessage()
-                            )
-                    );
+            return ResponseEntity.badRequest()
+                    .body(Map.of(
+                            "error",
+                            e.getMessage()
+                    ));
         }
     }
 
     // =========================================================
-    // UPDATE APPLICATION STATUS
+    // UPDATE STATUS
     // =========================================================
 
     @PutMapping("/{id}/status")
     public ResponseEntity<?> updateStatus(
+
             @PathVariable Long id,
+
             @RequestBody Map<String, String> request
     ) {
 
@@ -184,37 +253,31 @@ public class ApplicationController {
 
             String status = request.get("status");
 
-            if (status == null || status.trim().isEmpty()) {
+            if (status == null
+                    || status.trim().isEmpty()) {
 
-                return ResponseEntity
-                        .badRequest()
-                        .body(
-                                Map.of(
-                                        "error",
-                                        "status is required"
-                                )
-                        );
+                return ResponseEntity.badRequest()
+                        .body(Map.of(
+                                "error",
+                                "status is required"
+                        ));
             }
 
             Application application =
-                    applicationService
-                            .updateApplicationStatus(
-                                    id,
-                                    status
-                            );
+                    applicationService.updateApplicationStatus(
+                            id,
+                            status
+                    );
 
             return ResponseEntity.ok(application);
 
         } catch (RuntimeException e) {
 
-            return ResponseEntity
-                    .badRequest()
-                    .body(
-                            Map.of(
-                                    "error",
-                                    e.getMessage()
-                            )
-                    );
+            return ResponseEntity.badRequest()
+                    .body(Map.of(
+                            "error",
+                            e.getMessage()
+                    ));
         }
     }
 
@@ -230,21 +293,17 @@ public class ApplicationController {
         try {
 
             Application application =
-                    applicationService
-                            .getApplicationById(id);
+                    applicationService.getApplicationById(id);
 
             return ResponseEntity.ok(application);
 
         } catch (RuntimeException e) {
 
-            return ResponseEntity
-                    .status(404)
-                    .body(
-                            Map.of(
-                                    "error",
-                                    e.getMessage()
-                            )
-                    );
+            return ResponseEntity.status(404)
+                    .body(Map.of(
+                            "error",
+                            e.getMessage()
+                    ));
         }
     }
 }
